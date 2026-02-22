@@ -32,18 +32,36 @@
 .player-wrapper {
   width: 100%;
   max-width: 500px;
-  padding: 16px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.08);
+  padding: 12px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005));
+  border: 1px solid rgba(255,255,255,0.06);
   border-radius: 8px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
-  backdrop-filter: blur(8px) saturate(140%);
-  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03);
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  position: relative;
+  overflow: hidden;
   transition: all 320ms cubic-bezier(.2,.9,.2,1);
 }
+.player-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+  animation: shine 3s infinite;
+  pointer-events: none;
+}
+@keyframes shine {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
 .player-wrapper:hover {
-  box-shadow: 0 14px 46px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
-  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
+  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.008));
 }
 
 .title {
@@ -195,12 +213,12 @@
 /* Audio player styles */
 .audio-player {
   display: flex;
-  gap: 12px;
+  gap: 8px;
   align-items: center;
-  background: rgba(255,255,255,0.02);
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.04);
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
 }
 
 /* Glass rectangular surround */
@@ -213,10 +231,10 @@
   z-index: 2;
 }
 .audio-player .cover {
-  width: 96px;
-  height: 96px;
+  width: 80px;
+  height: 80px;
   object-fit: cover;
-  border-radius: 8px;
+  border-radius: 6px;
   flex-shrink: 0;
 }
 .audio-player .cover.placeholder {
@@ -226,32 +244,39 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 .audio-player .track-info {
   color: #fff;
   font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
 }
 .audio-player .controls {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
 }
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
 .play-btn {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   background: #fff;
   color: #111;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1;
   transition: all 220ms ease;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
 }
 .play-btn.playing {
   background: transparent;
@@ -282,15 +307,15 @@
 .progress {
   width: 100%;
   -webkit-appearance: none;
-  height: 6px;
+  height: 4px;
   background: linear-gradient(90deg,#5a7cfa,#ff8a8a);
-  border-radius: 6px;
+  border-radius: 4px;
   outline: none;
 }
 .progress::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   background: #fff;
   border-radius: 50%;
   box-shadow: 0 2px 6px rgba(0,0,0,0.4);
@@ -300,11 +325,11 @@
   transition: background 220ms ease, transform 220ms ease;
 }
 .audio-player.dragging .progress::-webkit-slider-thumb {
-  transform: scale(1.25);
+  transform: scale(1.15);
   box-shadow: 0 6px 18px rgba(0,0,0,0.45), 0 0 18px rgba(90,124,250,0.18);
 }
 .volume-control {
-  width: 120px;
+  width: 100px;
 }
 .volume-slider {
   width: 100%;
@@ -326,7 +351,7 @@
   transition: background 220ms ease;
 }
 .audio-player.dragging .volume-slider::-webkit-slider-thumb {
-  transform: scale(1.2);
+  transform: scale(1.1);
   box-shadow: 0 6px 18px rgba(0,0,0,0.35);
 }
 
