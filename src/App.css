@@ -6,7 +6,13 @@
 
 .app {
   min-height: 100vh;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+  background-image: url('/src/assets/bild2.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  /* subtle overlay */
+  background-blend-mode: overlay;
+  background-color: rgba(10,10,10,0.45);
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -205,12 +211,46 @@
   align-items: center;
 }
 .play-btn {
-  background: linear-gradient(135deg,#5a7cfa,#748ffc);
+  width: 36px;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
   border: none;
-  color: #fff;
-  padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+
+/* Press animation for play button */
+.play-btn:active {
+  transform: scale(0.9);
+}
+.play-btn::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  transition: width 320ms ease, height 320ms ease, opacity 320ms ease;
+  opacity: 0;
+}
+.play-btn:active::after {
+  width: 120px;
+  height: 120px;
+  opacity: 1;
 }
 .progress {
   width: 100%;
@@ -227,6 +267,14 @@
   background: #fff;
   border-radius: 50%;
   box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+}
+.audio-player.dragging .progress {
+  background: linear-gradient(90deg,#6fa0ff,#ff9a9a);
+  transition: background 220ms ease, transform 220ms ease;
+}
+.audio-player.dragging .progress::-webkit-slider-thumb {
+  transform: scale(1.25);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.45), 0 0 18px rgba(90,124,250,0.18);
 }
 .volume-control {
   width: 120px;
@@ -245,6 +293,20 @@
   height: 12px;
   background: #fff;
   border-radius: 50%;
+}
+.audio-player.dragging .volume-slider {
+  background: linear-gradient(90deg,#fff,#ddd);
+  transition: background 220ms ease;
+}
+.audio-player.dragging .volume-slider::-webkit-slider-thumb {
+  transform: scale(1.2);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+/* smooth thumb transitions */
+.progress::-webkit-slider-thumb,
+.volume-slider::-webkit-slider-thumb {
+  transition: transform 180ms ease, box-shadow 220ms ease;
 }
 
 @media (max-width: 520px) {
