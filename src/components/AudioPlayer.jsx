@@ -7,6 +7,7 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
   const [duration, setDuration] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
   const [volume, setVolume] = useState(1)
+  const [dragging, setDragging] = useState(false)
 
   useEffect(() => {
     const audio = audioRef.current
@@ -24,6 +25,16 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
   useEffect(() => {
     if (audioRef.current) audioRef.current.volume = volume
   }, [volume])
+
+  useEffect(() => {
+    const up = () => setDragging(false)
+    window.addEventListener('mouseup', up)
+    window.addEventListener('touchend', up)
+    return () => {
+      window.removeEventListener('mouseup', up)
+      window.removeEventListener('touchend', up)
+    }
+  }, [])
 
   const togglePlay = () => {
     const audio = audioRef.current
@@ -54,7 +65,7 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
   }
 
   return (
-    <div className="audio-player">
+    <div className={`audio-player ${dragging ? 'dragging' : ''}`}>
       <audio ref={audioRef} src={audioSrc} preload="metadata" />
 
       <div className="player-left">
@@ -69,7 +80,13 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
         <div className="track-info">{artist} - {title}</div>
 
         <div className="controls">
-          <button className="play-btn" onClick={togglePlay}>{playing ? 'Pause' : 'Play'}</button>
+          <button
+            className={`play-btn ${playing ? 'playing' : ''}`}
+            onClick={togglePlay}
+            aria-label={playing ? 'Pause' : 'Play'}
+          >
+            {playing ? '⏸' : '▶'}
+          </button>
           <div className="time">{formatTime(currentTime)} / {formatTime(duration)}</div>
         </div>
 
@@ -81,6 +98,10 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
           step="0.01"
           value={currentTime}
           onChange={onSeek}
+          onPointerDown={() => setDragging(true)}
+          onPointerUp={() => setDragging(false)}
+          onTouchStart={() => setDragging(true)}
+          onTouchEnd={() => setDragging(false)}
         />
 
         <div className="bottom-row">
@@ -93,6 +114,10 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
               value={volume}
               onChange={onVolume}
               className="volume-slider"
+              onPointerDown={() => setDragging(true)}
+              onPointerUp={() => setDragging(false)}
+              onTouchStart={() => setDragging(true)}
+              onTouchEnd={() => setDragging(false)}
             />
           </div>
         </div>

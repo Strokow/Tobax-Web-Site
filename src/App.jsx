@@ -43,7 +43,7 @@ function App() {
         <h1 className="title">My tasks for Sunday</h1>
         
         {/* Custom audio player (uses local files in src/assets/) */}
-        <div style={{ marginTop: 16 }}>
+        <div className="player-wrapper">
           {/* AudioPlayer component created in src/components/AudioPlayer.jsx */}
           {/* Place audio file at src/assets/heidelore.mp3 and cover at src/assets/heidelore.jpg */}
           <AudioPlayer

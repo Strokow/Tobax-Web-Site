@@ -29,6 +29,23 @@
   max-width: 500px;
 }
 
+.player-wrapper {
+  width: 100%;
+  max-width: 500px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px) saturate(140%);
+  -webkit-backdrop-filter: blur(8px) saturate(140%);
+  transition: all 320ms cubic-bezier(.2,.9,.2,1);
+}
+.player-wrapper:hover {
+  box-shadow: 0 14px 46px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+  background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+}
+
 .title {
   text-align: center;
   color: #fff;
@@ -186,7 +203,7 @@
   border: 1px solid rgba(255,255,255,0.04);
 }
 
-/* Glass circular surround */
+/* Glass rectangular surround */
 .audio-player {
   position: relative;
   z-index: 1;
@@ -194,27 +211,6 @@
 .audio-player > * {
   position: relative;
   z-index: 2;
-}
-.audio-player::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: calc(100% + 64px);
-  height: calc(100% + 64px);
-  border-radius: 50%;
-  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
-  border: 1px solid rgba(255,255,255,0.12);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
-  backdrop-filter: blur(8px) saturate(140%);
-  -webkit-backdrop-filter: blur(8px) saturate(140%);
-  pointer-events: none;
-  transition: transform 320ms cubic-bezier(.2,.9,.2,1), box-shadow 320ms ease;
-}
-.audio-player:hover::before {
-  transform: translate(-50%, -50%) scale(1.03);
-  box-shadow: 0 14px 46px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
 }
 .audio-player .cover {
   width: 96px;
@@ -342,13 +338,7 @@
 
 @media (max-width: 520px) {
   .container { max-width: 100%; }
+  .player-wrapper { max-width: 100%; }
   .audio-player { flex-direction: column; align-items: stretch; }
   .audio-player .cover { width: 100%; height: 160px; }
-}
-
-@media (max-width: 420px) {
-  .audio-player::before {
-    width: calc(100% + 32px);
-    height: calc(100% + 32px);
-  }
 }
