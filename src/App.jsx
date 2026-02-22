@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import './App.css'
+import AudioPlayer from './components/AudioPlayer'
 
 function App() {
   const [tasks, setTasks] = useState([
-    { id: 1, text: 'make love with Amelie', completed: false },
+    { id: 1, text: 'poop', completed: false },
     { id: 2, text: 'eat', completed: false },
-    { id: 3, text: 'again make love with Amelie', completed: false },
+    { id: 3, text: 'sleep', completed: false },
   ])
   const [input, setInput] = useState('')
 
@@ -41,6 +42,17 @@ function App() {
       <div className="container">
         <h1 className="title">My tasks for Sunday</h1>
         
+        {/* Custom audio player (uses local files in src/assets/) */}
+        <div style={{ marginTop: 16 }}>
+          {/* AudioPlayer component created in src/components/AudioPlayer.jsx */}
+          {/* Place audio file at src/assets/heidelore.mp3 and cover at src/assets/heidelore.jpg */}
+          <AudioPlayer
+            audioSrc="/src/assets/heidelore.mp3"
+            coverSrc="/src/assets/heidelore.jpg"
+            artist="Tobax"
+            title="Heidelore"
+          />
+        </div>
         <div className="input-section">
           <input
             type="text"
