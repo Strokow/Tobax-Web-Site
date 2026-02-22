@@ -1,50 +1,93 @@
-# Task Manager
+# Tobax Website
 
-Короткое описание:
+Official website for Tobax (Alexej Strokow), a drum & bass music artist specializing in neurofunk.
 
-Простое приложение для управления задачами — добавление, отметка как выполненное и удаление задач. Оно сделано как пример небольшого фронтенд-проекта для обучения и демонстрации.
+## Features
 
-Использованные технологии:
+- **Audio Player**: Custom-built audio player with track preview
+- **Biography**: Comprehensive artist biography and musical journey
+- **Responsive Design**: Optimized for desktop and mobile devices
+- **Modern UI**: Clean, minimalist design with custom typography
+- **Animated Elements**: Smooth transitions and gradient animations
 
-- React (компонентный UI)
-- Vite (сборка и dev-сервер)
-- Bootstrap (CSS фреймворк)
-- Bulma (CSS фреймворк)
-- Sass (SCSS препроцессор)
-- PostCSS + Autoprefixer
-- ESLint (статический анализ кода)
+## Tech Stack
 
-Как запустить локально:
+- **React** - UI framework
+- **Vite** - Build tool and dev server
+- **CSS3** - Styling with custom animations
+- **ESLint** - Code quality and consistency
 
-1. Установите зависимости:
+## Project Structure
 
+```
+tobax-website/
+├── src/
+│   ├── components/
+│   │   └── AudioPlayer.jsx    # Custom audio player component
+│   ├── assets/                # Images and media files
+│   ├── App.jsx                # Main application component
+│   ├── App.css                # Global styles
+│   └── main.jsx               # Application entry point
+├── public/                    # Static assets
+├── index.html                 # HTML template
+└── vite.config.js            # Vite configuration
+```
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v16 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/tobax-website.git
+cd tobax-website
+```
+
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Запустить dev-сервер:
-
+3. Start the development server:
 ```bash
 npm run dev
 ```
 
-3. Откройте в браузере http://localhost:5173/ (порт может отличаться)
+4. Open your browser and navigate to `http://localhost:5173`
 
-Дополнительно:
-- Перед пушем в удалённый репозиторий GitHub создайте репозиторий и добавьте `origin`, затем запушьте ветку `main` или `master`.
-# React + Vite
+## Available Scripts
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
 
-Currently, two official plugins are available:
+## Design Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Typography**: Exo 2 font with thin weight (200-300) and uppercase styling
+- **Background**: Grayscale background image with enhanced contrast and vignetting
+- **Color Scheme**: Dark theme with red accent colors
+- **Audio Player**: Minimalist design with animated gradient sliders
 
-## React Compiler
+## Browser Support
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
 
-## Expanding the ESLint configuration
+## License
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+All rights reserved. This website and its contents are property of Tobax (Alexej Strokow).
+
+## Contact
+
+For inquiries, please visit:
+- [SoundCloud](https://soundcloud.com/alex-tobax)
+- [Spotify](https://open.spotify.com)
+
