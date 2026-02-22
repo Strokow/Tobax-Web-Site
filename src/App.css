@@ -1,67 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@200;300;400&display=swap');
+
+/* BIO section custom styles */
+.bio-section {
+  background: rgba(20, 20, 20, 0.16); /* 80% more transparent than 0.08 */
+  box-shadow: 0 4px 16px 0 rgba(0,0,0,0.18);
+}
+.bio-section p, .bio-section h2 {
+  text-shadow: 0 3px 10px rgba(0,0,0,0.55), 0 1px 3px rgba(0,0,0,0.65);
+}
 #root {
   min-height: 100vh;
   margin: 0;
   padding: 0;
 }
 
-.app {
+.page-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #000;
+}
+
+.page-root::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   min-height: 100vh;
   background-image: url('/src/assets/bild2.jpg');
-  background-size: cover;
-  background-position: center;
+  background-size: 118% auto;
+  background-position: top center;
   background-repeat: no-repeat;
-  /* subtle overlay */
-  background-blend-mode: overlay;
-  background-color: rgba(10,10,10,0.45);
+  filter: grayscale(100%) contrast(1.4);
+  z-index: 0;
+}
+
+.page-root::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.5) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.app {
+  min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 40px 20px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0 20px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  z-index: 2;
+}
+
+.site-header {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 0 2px;
+  margin-top: 0;
+  position: relative;
+  z-index: 2;
 }
 
 .container {
   width: 100%;
-  max-width: 500px;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 16px;
+  padding: 0 130px 130px;
+  border-radius: 50px;
+  box-sizing: border-box;
 }
 
 .player-wrapper {
   width: 100%;
-  max-width: 500px;
-  padding: 12px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.025), rgba(255,255,255,0.005));
-  border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 8px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03);
-  backdrop-filter: blur(10px) saturate(150%);
-  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  max-width: 760px;
+  padding: 20px 24px;
+  background: rgba(0, 0, 0, 0.35);
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px; /* сглаженные углы */
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   position: relative;
   overflow: hidden;
   transition: all 320ms cubic-bezier(.2,.9,.2,1);
-}
-.player-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-  animation: shine 3s infinite;
-  pointer-events: none;
-}
-@keyframes shine {
-  0% { left: -100%; }
-  50% { left: 100%; }
-  100% { left: 100%; }
+  margin: 0 auto;
 }
 .player-wrapper:hover {
-  box-shadow: 0 12px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
-  background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.008));
+  box-shadow: none;
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .title {
@@ -82,15 +130,47 @@
   letter-spacing: 0.5px;
 }
 
+.logotype-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -400px;
+  margin-bottom: -8px;
+}
+
+.logotype-image {
+  max-width: 100%;
+  width: 880px;
+  height: auto;
+  filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.7));
+}
+
+.bio-image-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.bio-image {
+  width: 100%;
+  max-width: 624px;
+  height: auto;
+  border-radius: 12px;
+}
+
 .content-section {
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(0, 0, 0, 0.55));
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
   border-radius: 8px;
-  padding: 20px;
+  padding: 80px;
   margin-bottom: 25px;
   color: #e0e0e0;
   line-height: 1.6;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
 
 .content-section h2 {
@@ -103,6 +183,7 @@
 .content-section p {
   margin: 0;
   font-size: 0.95em;
+  color: #fff;
 }
 
 .links-section {
@@ -327,20 +408,23 @@
   white-space: nowrap;
 }
 .play-btn {
-  width: 32px;
-  height: 32px;
-  display: inline-flex;
+  width: 48px;
+  height: 48px;
+  display: flex;
   align-items: center;
   justify-content: center;
   background: #fff;
   color: #111;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 24px;
   line-height: 1;
   transition: all 220ms ease;
   box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
 }
 .play-btn.playing {
   background: transparent;
@@ -348,86 +432,9077 @@
   border: 2px solid rgba(255,255,255,0.95);
   box-shadow: none;
 }
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+/* Закрываем блок перед .progress */
 
-/* Press animation for play button */
-.play-btn:active {
-  transform: scale(0.9);
-}
-.play-btn::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.12);
-  transition: width 320ms ease, height 320ms ease, opacity 320ms ease;
-  opacity: 0;
-}
-.play-btn:active::after {
-  width: 120px;
-  height: 120px;
-  opacity: 1;
-}
 .progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
   width: 100%;
-  -webkit-appearance: none;
-  height: 4px;
-  background: linear-gradient(90deg,#5a7cfa,#ff8a8a);
-  border-radius: 4px;
-  outline: none;
-}
-.progress::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  background: #fff;
-  border-radius: 50%;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
-}
-.audio-player.dragging .progress {
-  background: linear-gradient(90deg,#6fa0ff,#ff9a9a);
-  transition: background 220ms ease, transform 220ms ease;
-}
-.audio-player.dragging .progress::-webkit-slider-thumb {
-  transform: scale(1.15);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.45), 0 0 18px rgba(90,124,250,0.18);
+  margin-top: 8px;
 }
 .volume-control {
-  width: 100px;
-}
-.volume-slider {
+  grid-row: 3;
+  grid-column: 1 / span 2;
   width: 100%;
-  -webkit-appearance: none;
-  height: 6px;
-  background: linear-gradient(90deg,#ddd,#aaa);
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
   border-radius: 6px;
-  transition: background 0.2s ease;
+  flex-shrink: 0;
 }
-.volume-slider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #505050;
+}
+
+.task-item.completed {
+  opacity: 0.5;
+}
+
+.task-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: #5a7cfa;
+  flex-shrink: 0;
+}
+
+.task-text {
+  flex: 1;
+  color: #fff;
+  font-size: 1em;
+  word-break: break-word;
+  transition: all 0.3s ease;
+}
+
+.task-item.completed .task-text {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.delete-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.delete-button:hover {
+  transform: scale(1.2);
+}
+
+.delete-button:active {
+  transform: scale(0.95);
+}
+
+.trash-icon {
+  display: block;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  font-size: 1.1em;
+  padding: 40px 20px;
+  margin: 0;
+}
+
+/* Audio player styles */
+.audio-player {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  border: none;
+}
+
+/* Glass rectangular surround */
+.audio-player {
+  position: relative;
+  z-index: 1;
+}
+.audio-player > * {
+  position: relative;
+  z-index: 2;
+}
+.audio-player .cover {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+.audio-player .cover.placeholder {
+  background: linear-gradient(135deg,#444,#333);
+}
+.audio-player .player-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.audio-player .track-info {
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95em;
+  line-height: 1.2;
+}
+.audio-player .controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.audio-player .time {
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+.play-btn {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: #111;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  transition: all 220ms ease;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.25);
+  aspect-ratio: 1 / 1;
+  grid-row: 1;
+  grid-column: 1;
+}
+.play-btn.playing {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255,255,255,0.95);
+  box-shadow: none;
+}
+.time {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  font-size: 0.9em;
+  white-space: nowrap;
+  align-self: center;
+}
+.progress {
+  grid-row: 2;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+.volume-control {
+  grid-row: 3;
+  grid-column: 1 / span 2;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.tasks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: #2a2a2a;
+  border: 1px solid #404040;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.task-item:hover {
+  background: #333;
+  border-color: #5050;
+}
+
+/* --- Latest layout and responsive overrides --- */
+.title-with-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.title-logo {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.player-in-bio {
+  margin-bottom: 0;
+}
+
+.player-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+
+.player-cover-image,
+.player-cover-placeholder {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+.player-cover-image {
+  object-fit: cover;
+}
+
+.player-cover-placeholder {
+  background: #444;
+}
+
+.player-row .play-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 0;
+  font-size: 22px;
+  flex-shrink: 0;
+  background: transparent;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.player-row .progress {
+  flex: 1;
+  min-width: 120px;
+  margin: 0 4px;
+}
+
+.player-row .volume-slider {
+  width: 88px;
+  flex-shrink: 0;
+}
+
+/* Minimal colorless range sliders */
+.player-row .progress,
+.player-row .volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(90deg, rgba(220, 38, 38, 0.5), rgba(239, 68, 68, 0.5), rgba(185, 28, 28, 0.5));
+  background-size: 200% 100%;
+  animation: sliderGradient 4s ease infinite;
+  cursor: pointer;
+  height: 4px;
+  border-radius: 2px;
+  outline: none;
+}
+
+@keyframes sliderGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.player-row .progress::-webkit-slider-track {
+  background: transparent;
+  height: 4px;
+  border-radius: 2px;
+  border: none;
+}
+
+.player-row .volume-slider::-webkit-slider-track {
+  background: transparent;
+  height: 4px;
+  border-radius: 2px;
+  border: none;
+}
+
+.player-row .progress::-moz-range-track {
+  background: transparent;
+  height: 4px;
+  border-radius: 2px;
+  border: none;
+}
+
+.player-row .volume-slider::-moz-range-track {
+  background: transparent;
+  height: 4px;
+  border-radius: 2px;
+  border: none;
+}
+
+.player-row .progress::-webkit-slider-thumb,
+.player-row .volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }
-.audio-player.dragging .volume-slider {
-  background: linear-gradient(90deg,#fff,#ddd);
-  transition: background 220ms ease;
+
+.player-row .progress::-moz-range-thumb,
+.player-row .volume-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 }
-.audio-player.dragging .volume-slider::-webkit-slider-thumb {
+
+.player-row .progress:hover::-webkit-slider-thumb,
+.player-row .volume-slider:hover::-webkit-slider-thumb {
+  background: rgba(220, 38, 38, 1);
   transform: scale(1.1);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
 }
 
-/* smooth thumb transitions */
-.progress::-webkit-slider-thumb,
-.volume-slider::-webkit-slider-thumb {
-  transition: transform 180ms ease, box-shadow 220ms ease;
+.player-row .progress:hover::-moz-range-thumb,
+.player-row .volume-slider:hover::-moz-range-thumb {
+  background: rgba(220, 38, 38, 1);
+  transform: scale(1.1);
 }
 
-@media (max-width: 520px) {
-  .container { max-width: 100%; }
-  .player-wrapper { max-width: 100%; }
-  .audio-player { flex-direction: column; align-items: stretch; }
-  .audio-player .cover { width: 100%; height: 160px; }
+.player-time {
+  min-width: 78px;
+  text-align: center;
+  color: #fff;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+.player-meta-inline {
+  font-size: 0.68em;
+  font-weight: 200;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  max-width: none;
+  margin-right: 8px;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .app {
+    padding: 16px 10px;
+    align-items: flex-start;
+  }
+
+  .container {
+    max-width: 100%;
+    padding: 18px;
+    border-radius: 24px;
+    gap: 16px;
+  }
+
+  .title {
+    font-size: 1.9em;
+    margin: 0;
+  }
+
+  .title-logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .subtitle {
+    font-size: 0.95em;
+    margin: 0;
+  }
+
+  .content-section {
+    padding: 14px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+  }
+
+  .content-section h2 {
+    font-size: 1.1em;
+    margin-bottom: 10px;
+  }
+
+  .content-section p {
+    font-size: 0.92em;
+  }
+
+  .player-wrapper {
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  .player-row {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .player-row .progress {
+    order: 4;
+    width: 100%;
+    flex-basis: 100%;
+    min-width: 0;
+    margin: 4px 0 0;
+  }
+
+  .player-row .volume-slider {
+    width: 72px;
+  }
+
+  .player-time {
+    margin-left: auto;
+    min-width: 64px;
+    font-size: 0.78em;
+  }
+
+  .links-section {
+    gap: 8px;
+    justify-content: stretch;
+  }
+
+  .link-btn {
+    flex: 1 1 100%;
+    text-align: center;
+    padding: 10px 12px;
+  }
+}
+
+/* Typography override: readable body + styled headings */
+.container {
+  font-family: "Exo 2", sans-serif;
+  font-optical-sizing: auto;
+  text-transform: uppercase;
+  font-weight: 200;
+}
+
+.container * {
+  text-transform: inherit;
+  font-weight: inherit;
+}
+
+.title,
+.subtitle,
+.content-section h2,
+.link-btn {
+  font-family: "Exo 2", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  word-spacing: 1px;
+}
+
+.content-section p,
+.player-time,
+.time {
+  font-family: "Exo 2", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  text-transform: uppercase;
+  letter-spacing: 0.15px;
+  word-spacing: 0.5px;
+  line-height: 1.4;
+}
+
+.content-section b,
+.content-section strong {
+  font-weight: 300;
+}
+
+.content-section p {
+  margin: 0;
+}
+
+.content-section p:last-child {
+  margin-bottom: 0;
 }

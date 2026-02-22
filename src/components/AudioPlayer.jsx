@@ -67,29 +67,20 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
   return (
     <div className={`audio-player ${dragging ? 'dragging' : ''}`}>
       <audio ref={audioRef} src={audioSrc} preload="metadata" />
-
-      <div className="player-left">
+      <div className="player-row">
+        <div className="player-meta-inline">{artist} - {title}</div>
         {coverSrc ? (
-          <img src={coverSrc} alt={`${artist} - ${title}`} className="cover" />
+          <img src={coverSrc} alt={`${artist} - ${title}`} className="player-cover-image" />
         ) : (
-          <div className="cover placeholder" />
+          <div className="player-cover-placeholder" />
         )}
-      </div>
-
-      <div className="player-right">
-        <div className="track-info">{artist} - {title}</div>
-
-        <div className="controls">
-          <button
-            className={`play-btn ${playing ? 'playing' : ''}`}
-            onClick={togglePlay}
-            aria-label={playing ? 'Pause' : 'Play'}
-          >
-            {playing ? '⏸' : '▶'}
-          </button>
-          <div className="time">{formatTime(currentTime)} / {formatTime(duration)}</div>
-        </div>
-
+        <button
+          className={`play-btn ${playing ? 'playing' : ''}`}
+          onClick={togglePlay}
+          aria-label={playing ? 'Pause' : 'Play'}
+        >
+          {playing ? '⏸' : '▶'}
+        </button>
         <input
           className="progress"
           type="range"
@@ -103,24 +94,20 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
           onTouchStart={() => setDragging(true)}
           onTouchEnd={() => setDragging(false)}
         />
-
-        <div className="bottom-row">
-          <div className="volume-control">
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.01"
-              value={volume}
-              onChange={onVolume}
-              className="volume-slider"
-              onPointerDown={() => setDragging(true)}
-              onPointerUp={() => setDragging(false)}
-              onTouchStart={() => setDragging(true)}
-              onTouchEnd={() => setDragging(false)}
-            />
-          </div>
-        </div>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          value={volume}
+          onChange={onVolume}
+          className="volume-slider"
+          onPointerDown={() => setDragging(true)}
+          onPointerUp={() => setDragging(false)}
+          onTouchStart={() => setDragging(true)}
+          onTouchEnd={() => setDragging(false)}
+        />
+        <span className="player-time">{formatTime(currentTime)} / {formatTime(duration)}</span>
       </div>
     </div>
   )
