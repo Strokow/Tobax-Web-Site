@@ -7,32 +7,36 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
   const [duration, setDuration] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
   const [volume, setVolume] = useState(1)
-  const [dragging, setDragging] = useState(false)
+  const [seekDragging, setSeekDragging] = useState(false)
 
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
     const onLoaded = () => setDuration(audio.duration || 0)
-    const onTime = () => setCurrentTime(audio.currentTime)
+    const onTime = () => {
+      if (!seekDragging) setCurrentTime(audio.currentTime)
+    }
     audio.addEventListener('loadedmetadata', onLoaded)
     audio.addEventListener('timeupdate', onTime)
     return () => {
       audio.removeEventListener('loadedmetadata', onLoaded)
       audio.removeEventListener('timeupdate', onTime)
     }
-  }, [])
+  }, [seekDragging])
 
   useEffect(() => {
-    if (audioRef.current) audioRef.current.volume = volume
+    const audio = audioRef.current
+    if (audio) audio.volume = volume
   }, [volume])
 
   useEffect(() => {
-    const up = () => setDragging(false)
-    window.addEventListener('mouseup', up)
-    window.addEventListener('touchend', up)
+    const onMouseUp = () => setSeekDragging(false)
+    const onTouchEnd = () => setSeekDragging(false)
+    window.addEventListener('mouseup', onMouseUp)
+    window.addEventListener('touchend', onTouchEnd)
     return () => {
-      window.removeEventListener('mouseup', up)
-      window.removeEventListener('touchend', up)
+      window.removeEventListener('mouseup', onMouseUp)
+      window.removeEventListener('touchend', onTouchEnd)
     }
   }, [])
 
@@ -51,11 +55,14 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
   const onSeek = (e) => {
     const audio = audioRef.current
     const time = Number(e.target.value)
-    if (audio) audio.currentTime = time
     setCurrentTime(time)
+    if (audio) audio.currentTime = time
   }
 
-  const onVolume = (e) => setVolume(Number(e.target.value))
+  const onVolume = (e) => {
+    const newVolume = Number(e.target.value)
+    setVolume(newVolume)
+  }
 
   const formatTime = (t) => {
     if (!t || isNaN(t)) return '0:00'
@@ -65,7 +72,7 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
   }
 
   return (
-    <div className={`audio-player ${dragging ? 'dragging' : ''}`}>
+    <div className={`audio-player ${seekDragging ? 'dragging' : ''}`}>
       <audio ref={audioRef} src={audioSrc} preload="metadata" />
       <div className="player-row">
         <div className="player-meta-inline">{artist} - {title}</div>
@@ -79,7 +86,13 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
           onClick={togglePlay}
           aria-label={playing ? 'Pause' : 'Play'}
         >
-          {playing ? '⏸' : '▶'}
+          <svg viewBox="0 0 24 24" className="play-icon" width="18" height="18" fill="currentColor">
+            {playing ? (
+              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+            ) : (
+              <path d="M8 5v14l11-7z" />
+            )}
+          </svg>
         </button>
         <input
           className="progress"
@@ -89,10 +102,8 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
           step="0.01"
           value={currentTime}
           onChange={onSeek}
-          onPointerDown={() => setDragging(true)}
-          onPointerUp={() => setDragging(false)}
-          onTouchStart={() => setDragging(true)}
-          onTouchEnd={() => setDragging(false)}
+          onMouseDown={() => setSeekDragging(true)}
+          onTouchStart={() => setSeekDragging(true)}
         />
         <input
           type="range"
@@ -102,10 +113,6 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
           value={volume}
           onChange={onVolume}
           className="volume-slider"
-          onPointerDown={() => setDragging(true)}
-          onPointerUp={() => setDragging(false)}
-          onTouchStart={() => setDragging(true)}
-          onTouchEnd={() => setDragging(false)}
         />
         <span className="player-time">{formatTime(currentTime)} / {formatTime(duration)}</span>
       </div>

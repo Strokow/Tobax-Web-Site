@@ -185,11 +185,23 @@ function App() {
                     </button>
                   </div>
                 </div>
-                <div className="bio-text-wrapper">
-                  {currentLanguage === 'en' && (
-                    <div className="bio-text bio-text--en">
-                      <p>
-                        Tobax (eng. Aleksei Strokov, ger. Alexej Strokow, ru. Алексей Строков) represents the mid-generation of drum & bass artists, primarily focused on neurofunk, though his formative discography also explored Liquid and Jump Up. Today, he stands as one of the most internationally respected drum & bass producers and DJs to emerge from Russia, his influence deeply acknowledged far beyond his homeland.
+                <div className="bio-content">
+                  <button 
+                    className="language-arrow prev-lang"
+                    onClick={() => {
+                      const langs = ['en', 'de', 'ru']
+                      const currentIndex = langs.indexOf(currentLanguage)
+                      setCurrentLanguage(langs[(currentIndex - 1 + langs.length) % langs.length])
+                    }}
+                    aria-label="Previous language"
+                  >
+                    ←
+                  </button>
+                  <div className="bio-text-wrapper">
+                    {currentLanguage === 'en' && (
+                      <div className="bio-text bio-text--en">
+                        <p>
+                          Tobax (eng. Aleksei Strokov, ger. Alexej Strokow, ru. Алексей Строков) represents the mid-generation of drum & bass artists, primarily focused on neurofunk, though his formative discography also explored Liquid and Jump Up. Today, he stands as one of the most internationally respected drum & bass producers and DJs to emerge from Russia, his influence deeply acknowledged far beyond his homeland.
                         </p>
                 <p>
                   Long before international flights and massive festival stages, his musical journey began in a small room after school. Armed with a basic cassette recorder, a drum machine, and a guitar processor, he spent his childhood writing and recording his very first tracks directly onto blank TDK cassettes. It was a raw, hands-on process where the tape hiss, hum, and accidental distortion became natural parts of the sound. He experimented heavily with electric guitar riffs, essentially acting as a one-man band. This early foundation in rock, combined with a deep fascination for cinema, shaped his creative vision early on. From those first DIY tape recordings, he began to view tracks not merely as rhythms, but as atmospheric spaces and scenes from a movie playing without a screen.
@@ -206,9 +218,6 @@ function App() {
                 <p>
                   Today, Tobax’s sound masterfully blends cinematic sci-fi spaces, extended immersive intros, and direct, visceral neurofunk energy. Every set he plays and every track he writes remains an extension of his lifelong philosophy: building the atmosphere first, and delivering the impact second.
                 </p>
-                      </div>
-                    )}
-                  </div>
               </div>
 
               <footer className="site-footer">
