@@ -1,6 +1,20 @@
 import './App.css'
 import AudioPlayer from './components/AudioPlayer'
+import SpotifyEmbed from './components/SpotifyEmbed'
+import ContactForm from './components/ContactForm'
 import { useEffect, useState } from 'react'
+import logotypeImage from './assets/optimized/tobax-wordmark.png'
+import monogram from './assets/tobax-logo.png'
+import heroAvif from './assets/optimized/bild2-bg.avif'
+import heroWebp from './assets/optimized/bild2-bg.webp'
+import heroJpg from './assets/optimized/bild2-bg.jpg'
+import bioImageAvif from './assets/optimized/bild4.avif'
+import bioImageWebp from './assets/optimized/bild4.webp'
+import bioImageJpg from './assets/optimized/bild4.jpg'
+import heideloreAudio from './assets/heidelore.mp3'
+import coverAvif from './assets/optimized/heidelore-cover.avif'
+import coverWebp from './assets/optimized/heidelore-cover.webp'
+import coverJpg from './assets/optimized/heidelore-cover.jpg'
 
 function SoundCloudIcon() {
   return (
@@ -69,12 +83,65 @@ function YandexMusicIcon() {
   )
 }
 
+function ArrowIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" className="hub-arrow" aria-hidden="true">
+      <path d="M7 17L17 7M17 7H8M17 7V16" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+const LINKS = [
+  { key: 'soundcloud', name: 'SoundCloud', handle: 'alex-tobax', href: 'https://soundcloud.com/alex-tobax', Icon: SoundCloudIcon },
+  { key: 'spotify', name: 'Spotify', handle: 'Tobax', href: 'https://open.spotify.com/intl-de/artist/2DcPGpnRStvxX5m8JHIStN?si=8SiMryQjToWnxeJ4pV1ybw', Icon: SpotifyIcon },
+  { key: 'beatport', name: 'Beatport', handle: 'artist / tobax', href: 'https://www.beatport.com/artist/tobax/186408?srsltid=AfmBOooYFUS2XlXAk6JKua0VRExgGGf4mJbIPAzCWwCgyUriEmwehVVE', Icon: BeatportIcon },
+  { key: 'instagram', name: 'Instagram', handle: '@alextobax', href: 'https://www.instagram.com/alextobax/?hl=en', Icon: InstagramIcon, hideForRu: true },
+  { key: 'vk', name: 'VK', handle: 'vk.com/tobax', href: 'https://vk.com/tobax', Icon: VkIcon },
+  { key: 'yandex', name: 'Yandex Music', handle: 'artist / 723217', href: 'https://music.yandex.ru/artist/723217', Icon: YandexMusicIcon },
+]
+
+const BIO_QUOTE = {
+  en: 'Build the atmosphere first. Deliver the impact second.',
+  de: 'Zuerst die Atmosphäre. Dann die Wucht.',
+  ru: 'Сначала атмосфера. Потом удар.',
+}
+
+const SPOTIFY_EMBED_SRC =
+  'https://open.spotify.com/embed/artist/2DcPGpnRStvxX5m8JHIStN?utm_source=generator&theme=0'
+
 function App() {
   const [isRussianIp, setIsRussianIp] = useState(false)
   const [isPageVisible, setIsPageVisible] = useState(false)
   const [currentLanguage, setCurrentLanguage] = useState('en')
   const isImpressumPage = typeof window !== 'undefined' && window.location.pathname === '/impressum'
   const isDatenschutzPage = typeof window !== 'undefined' && window.location.pathname === '/datenschutzerklaerung'
+  const isLegalPage = isImpressumPage || isDatenschutzPage
+
+  useEffect(() => {
+    const routes = {
+      '/impressum': {
+        title: 'Impressum — Tobax',
+        canonical: 'https://tobax.online/impressum',
+        index: false,
+      },
+      '/datenschutzerklaerung': {
+        title: 'Datenschutzerklärung — Tobax',
+        canonical: 'https://tobax.online/datenschutzerklaerung',
+        index: false,
+      },
+    }
+    const path = window.location.pathname
+    const meta = routes[path] || {
+      title: 'Tobax — Neurofunk Drum & Bass Producer & DJ | Official',
+      canonical: 'https://tobax.online/',
+      index: true,
+    }
+    document.title = meta.title
+    document.querySelector('link[rel="canonical"]')?.setAttribute('href', meta.canonical)
+    document
+      .querySelector('meta[name="robots"]')
+      ?.setAttribute('content', meta.index ? 'index, follow, max-image-preview:large' : 'noindex, follow')
+  }, [])
 
   useEffect(() => {
     setIsPageVisible(true)
@@ -104,6 +171,29 @@ function App() {
     }
   }, [])
 
+  // Scroll-reveal: fade sections in as they enter the viewport
+  useEffect(() => {
+    const els = Array.from(document.querySelectorAll('.reveal'))
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduce || !('IntersectionObserver' in window)) {
+      els.forEach((el) => el.classList.add('is-visible'))
+      return
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            io.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+    )
+    els.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [])
+
   const handlePageNav = (event, targetPath) => {
     event.preventDefault()
     if (typeof window === 'undefined' || window.location.pathname === targetPath) return
@@ -113,335 +203,514 @@ function App() {
     }, 320)
   }
 
-  useEffect(() => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768
-    if (!isMobile) return
-
-    const handleScroll = () => {
-      const pageRoot = document.querySelector('.page-root')
-      if (!pageRoot) return
-
-      const scrollY = window.scrollY
-      const contentHeight = document.documentElement.scrollHeight - window.innerHeight
-      const scrollPercent = contentHeight > 0 ? Math.min(scrollY / contentHeight, 1) : 0
-      const blurValue = Math.max(scrollPercent * 20, 0)
-
-      pageRoot.style.setProperty('--blur-amount', `${blurValue}px`)
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+  const visibleLinks = LINKS.filter((link) => !(link.hideForRu && isRussianIp))
 
   return (
     <div className="page-root">
       <header className="site-header">
-        <div className="logotype-wrap">
-          <img
-            src="/src/assets/tobax-logotype-font.png"
-            alt="Tobax Logotype"
-            className="logotype-image"
-          />
-        </div>
+        <a className="brand" href="/" onClick={(event) => handlePageNav(event, '/')} aria-label="Tobax — home">
+          <img src={monogram} alt="" className="brand-mark" />
+          <img src={logotypeImage} alt="Tobax" className="brand-wordmark" />
+        </a>
+        {!isLegalPage && (
+          <nav className="site-nav" aria-label="Sections">
+            <a href="#listen" className="nav-cta">Listen</a>
+            <a href="#bio">Bio</a>
+            <a href="#follow">Follow</a>
+            <a href="#contact">Booking</a>
+          </nav>
+        )}
       </header>
-      <div className="app">
-        <div className={`container page-content ${isPageVisible ? 'page-content--visible' : ''}`}>
-          {!isImpressumPage && !isDatenschutzPage ? (
-            <>
-              {/* Content Section with Audio Player */}
-              <div className="content-section bio-section">
-                <div className="bio-image-wrap">
-                  <img src="/src/assets/bild4.jpg" alt="Tobax" className="bio-image" />
-                </div>
-                <div className="player-wrapper player-in-bio">
-                  <AudioPlayer
-                    audioSrc="/src/assets/heidelore.mp3"
-                    coverSrc="/src/assets/heidelore.jpg"
-                    artist="Tobax"
-                    title="Heidelore"
-                  />
-                </div>
-                <div className="bio-header">
-                  <h2>BIO</h2>
-                  <div className="language-switcher-buttons">
-                    <button 
-                      className={`lang-btn ${currentLanguage === 'en' ? 'active' : ''}`}
-                      onClick={() => setCurrentLanguage('en')}
-                    >
-                      EN
-                    </button>
-                    <button 
-                      className={`lang-btn ${currentLanguage === 'de' ? 'active' : ''}`}
-                      onClick={() => setCurrentLanguage('de')}
-                    >
-                      DE
-                    </button>
-                    <button 
-                      className={`lang-btn ${currentLanguage === 'ru' ? 'active' : ''}`}
-                      onClick={() => setCurrentLanguage('ru')}
-                    >
-                      RU
-                    </button>
-                  </div>
-                </div>
-                <div className="bio-text-wrapper">
-                  {currentLanguage === 'en' && (
-                    <div className="bio-text bio-text--en">
-                      <p>
-                        Tobax (eng. Aleksei Strokov, ger. Alexej Strokow, ru. Алексей Строков) represents the mid-generation of drum & bass artists, primarily focused on neurofunk, though his formative discography also explored Liquid and Jump Up. Today, he stands as one of the most internationally respected drum & bass producers and DJs to emerge from Russia, his influence deeply acknowledged far beyond his homeland.
-                        </p>
-                <p>
-                  Long before international flights and massive festival stages, his musical journey began in a small room after school. Armed with a basic cassette recorder, a drum machine, and a guitar processor, he spent his childhood writing and recording his very first tracks directly onto blank TDK cassettes. It was a raw, hands-on process where the tape hiss, hum, and accidental distortion became natural parts of the sound. He experimented heavily with electric guitar riffs, essentially acting as a one-man band. This early foundation in rock, combined with a deep fascination for cinema, shaped his creative vision early on. From those first DIY tape recordings, he began to view tracks not merely as rhythms, but as atmospheric spaces and scenes from a movie playing without a screen.
-                </p>
-                <p>
-                  He began producing electronically in earnest in 2010 in Samara, Russia. Progress was deliberate — years were spent meticulously learning how sheer sonic power and deep atmosphere could coexist within the same drop. His first performance outside his hometown happened while he was still underage; he traveled there with his mother, yet local promoters were already booking him as an artist commanding serious attention. What began with blank TDK tapes eventually grew into a prolific discography of over a hundred released tracks, cementing his legacy not only in the digital realm but across physical formats like vinyl and CDs.
-                </p>
-                <p>
-                  His dedication translated into a relentless schedule, with hundreds of gigs under his belt. He toured extensively across his native Russia, while also leaving a massive sonic footprint throughout Czechia, Austria, and Germany. Time and persistence inevitably led to heavy support from genre titans like Noisia, Black Sun Empire, Ed Rush, Pendulum, A.M.C, Mefjus, and Phace, alongside major releases on Titan, Eatbrain, Neuropunk, and C4C Recordings. His music carried him across Europe, landing him on the stages of major festivals such as Let It Roll, Rampage, Neuropunk, and Pirate Station.
-                </p>
-                <p>
-                  In 2021, a new biographical chapter unfolded as Tobax relocated to Dresden, Germany. He seamlessly integrated into the local bass music ecosystem, largely through a fruitful collaboration with the UTM crew. Today, in his international performances, he proudly represents both his roots and the German drum & bass scene. His impact on his new home was officially recognized at the Drum & Bass Germany Awards: Tobax was voted 2nd place for Best Producer (East Germany) in 2022, following it up in 2023 with 3rd place for Best Producer and 3rd place for Best Track.
-                </p>
-                <p>
-                  Today, Tobax’s sound masterfully blends cinematic sci-fi spaces, extended immersive intros, and direct, visceral neurofunk energy. Every set he plays and every track he writes remains an extension of his lifelong philosophy: building the atmosphere first, and delivering the impact second.
-                </p>
-                      </div>
-                    )}
-                  </div>
-              </div>
 
-              <footer className="site-footer">
-                <div className="links-section">
-                  <a href="https://soundcloud.com/alex-tobax" target="_blank" rel="noreferrer" className="link-btn" aria-label="SoundCloud" title="SoundCloud">
-                    <SoundCloudIcon />
-                  </a>
-                  <a href="https://open.spotify.com/intl-de/artist/2DcPGpnRStvxX5m8JHIStN?si=8SiMryQjToWnxeJ4pV1ybw" target="_blank" rel="noreferrer" className="link-btn" aria-label="Spotify" title="Spotify">
-                    <SpotifyIcon />
-                  </a>
-                  <a href="https://www.beatport.com/artist/tobax/186408?srsltid=AfmBOooYFUS2XlXAk6JKua0VRExgGGf4mJbIPAzCWwCgyUriEmwehVVE" target="_blank" rel="noreferrer" className="link-btn" aria-label="Beatport" title="Beatport">
-                    <BeatportIcon />
-                  </a>
-                  {!isRussianIp && (
-                    <a href="https://www.instagram.com/alextobax/?hl=en" target="_blank" rel="noreferrer" className="link-btn" aria-label="Instagram" title="Instagram">
-                      <InstagramIcon />
+      <main className="app">
+        <div className={`page-content ${isPageVisible ? 'page-content--visible' : ''}`}>
+          {!isLegalPage ? (
+            <>
+              {/* ---------- HERO — cinematic thesis ---------- */}
+              <section className="hero" aria-label="Tobax">
+                <div className="hero-media">
+                  <picture>
+                    <source srcSet={heroAvif} type="image/avif" />
+                    <source srcSet={heroWebp} type="image/webp" />
+                    <img src={heroJpg} alt="Tobax performing to a packed club, his name lit on the stage screen" fetchPriority="high" />
+                  </picture>
+                </div>
+                <div className="hero-scrim" />
+                <div className="hero-inner">
+                  <p className="hero-eyebrow">Neurofunk · Drum &amp; Bass · Dresden</p>
+                  <h1 className="hero-wordmark-wrap">
+                    <img src={logotypeImage} alt="Tobax" className="hero-wordmark" />
+                    <span className="visually-hidden">
+                      Tobax — Aleksei Strokov, neurofunk drum &amp; bass producer and DJ based in Dresden, Germany.
+                    </span>
+                  </h1>
+                  <p className="hero-lead">
+                    Cinematic sci-fi neurofunk — <b>atmosphere first, impact second.</b>
+                  </p>
+                  <div className="hero-actions">
+                    <a className="btn btn--primary" href="#listen">
+                      <span className="btn-play-glyph">▶</span> Listen
                     </a>
-                  )}
-                  <a href="https://vk.com/tobax" target="_blank" rel="noreferrer" className="link-btn" aria-label="VK" title="VK">
-                    <VkIcon />
-                  </a>
-                  <a href="https://music.yandex.ru/artist/723217" target="_blank" rel="noreferrer" className="link-btn" aria-label="Yandex Music" title="Yandex Music">
-                    <YandexMusicIcon />
-                  </a>
+                    <a className="btn btn--ghost" href="#follow">Follow</a>
+                  </div>
                 </div>
-                <div className="impressum-links">
-                  <a
-                    className="impressum-link"
-                    href="/impressum"
-                    onClick={(event) => handlePageNav(event, '/impressum')}
-                  >
-                    IMPRESSUM
-                  </a>
-                  <a
-                    className="impressum-link"
-                    href="/datenschutzerklaerung"
-                    onClick={(event) => handlePageNav(event, '/datenschutzerklaerung')}
-                  >
-                    DATENSCHUTZERKLÄRUNG
-                  </a>
-                </div>
-              </footer>
+                <span className="hero-credit">Photo · Max Khrabrov</span>
+              </section>
+
+              <div className="container">
+                {/* ---------- FACTS — data as data ---------- */}
+                <section className="section reveal" aria-label="Key facts">
+                  <div className="facts-grid">
+                    <div className="fact">
+                      <div className="fact-label">Genre</div>
+                      <div className="fact-value">Neurofunk · <span className="accent">Drum &amp; Bass</span></div>
+                    </div>
+                    <div className="fact">
+                      <div className="fact-label">Based in</div>
+                      <div className="fact-value">Dresden, Germany</div>
+                    </div>
+                    <div className="fact">
+                      <div className="fact-label">From</div>
+                      <div className="fact-value">Samara, Russia</div>
+                    </div>
+                    <div className="fact">
+                      <div className="fact-label">Labels</div>
+                      <div className="fact-value">Titan · Eatbrain · Neuropunk · C4C</div>
+                    </div>
+                    <div className="fact">
+                      <div className="fact-label">Awards</div>
+                      <div className="fact-value">DnB Germany · 2022 / 2023</div>
+                    </div>
+                  </div>
+                </section>
+
+                {/* ---------- LISTEN — featured self-release ---------- */}
+                <section className="section reveal" id="listen" aria-labelledby="listen-title">
+                  <div className="section-head">
+                    <span className="kicker">Listen</span>
+                    <h2 className="section-title">Latest self-release</h2>
+                  </div>
+                  <div className="listen-feature">
+                    <div className="listen-cover">
+                      <picture>
+                        <source srcSet={coverAvif} type="image/avif" />
+                        <source srcSet={coverWebp} type="image/webp" />
+                        <img src={coverJpg} alt="Heidelore — cover art" loading="lazy" decoding="async" />
+                      </picture>
+                    </div>
+                    <div className="listen-body">
+                      <span className="chip">Self-release · Free to play</span>
+                      <div className="listen-title" id="listen-title">Heidelore</div>
+                      <div className="listen-artist">TOBAX</div>
+                      <div className="player-wrapper">
+                        <AudioPlayer
+                          audioSrc={heideloreAudio}
+                          coverSrc={coverJpg}
+                          coverWebp={coverWebp}
+                          coverAvif={coverAvif}
+                          artist="Tobax"
+                          title="Heidelore"
+                          variant="feature"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="embed-block">
+                    <p className="embed-label">
+                      <span className="embed-label-tag">Full catalogue</span> Top tracks &amp; releases on Spotify
+                    </p>
+                    <SpotifyEmbed src={SPOTIFY_EMBED_SRC} title="Tobax — top tracks on Spotify" />
+                  </div>
+                </section>
+
+                {/* ---------- BIO — editorial long-read ---------- */}
+                <section className="section reveal" id="bio" aria-labelledby="bio-title">
+                  <div className="section-head">
+                    <span className="kicker">Biography</span>
+                    <h2 className="section-title" id="bio-title">Atmosphere, engineered</h2>
+                  </div>
+                  <div className="bio-layout">
+                    <figure className="bio-portrait">
+                      <picture>
+                        <source srcSet={bioImageAvif} type="image/avif" />
+                        <source srcSet={bioImageWebp} type="image/webp" />
+                        <img src={bioImageJpg} alt="Tobax behind the decks under red and blue stage light" loading="lazy" decoding="async" />
+                      </picture>
+                      <figcaption>Tobax — live · Photo Max Khrabrov</figcaption>
+                    </figure>
+
+                    <div className="bio-main">
+                      <div className="bio-header">
+                        <blockquote className="bio-quote" lang={currentLanguage}>
+                          {BIO_QUOTE[currentLanguage]}
+                        </blockquote>
+                        <div className="language-switcher-buttons" role="group" aria-label="Biography language">
+                          {['en', 'de', 'ru'].map((lang) => (
+                            <button
+                              key={lang}
+                              className={`lang-btn ${currentLanguage === lang ? 'active' : ''}`}
+                              onClick={() => setCurrentLanguage(lang)}
+                              aria-pressed={currentLanguage === lang}
+                            >
+                              {lang.toUpperCase()}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {currentLanguage === 'en' && (
+                        <div className="bio-text bio-text--en" lang="en">
+                          <p>
+                            Tobax (eng. Aleksei Strokov, ger. Alexej Strokow, ru. Алексей Строков) represents the mid-generation of drum &amp; bass artists, primarily focused on neurofunk, though his formative discography also explored Liquid and Jump Up. Today, he stands as one of the most internationally respected drum &amp; bass producers and DJs to emerge from Russia, his influence deeply acknowledged far beyond his homeland.
+                          </p>
+                          <p>
+                            Long before international flights and massive festival stages, his musical journey began in a small room after school. Armed with a basic cassette recorder, a drum machine, and a guitar processor, he spent his childhood writing and recording his very first tracks directly onto blank TDK cassettes. It was a raw, hands-on process where the tape hiss, hum, and accidental distortion became natural parts of the sound. He experimented heavily with electric guitar riffs, essentially acting as a one-man band. This early foundation in rock, combined with a deep fascination for cinema, shaped his creative vision early on. From those first DIY tape recordings, he began to view tracks not merely as rhythms, but as atmospheric spaces and scenes from a movie playing without a screen.
+                          </p>
+                          <p>
+                            He began producing electronically in earnest in 2010 in Samara, Russia. Progress was deliberate — years were spent meticulously learning how sheer sonic power and deep atmosphere could coexist within the same drop. His first performance outside his hometown happened while he was still underage; he traveled there with his mother, yet local promoters were already booking him as an artist commanding serious attention. What began with blank TDK tapes eventually grew into a prolific discography of over a hundred released tracks, cementing his legacy not only in the digital realm but across physical formats like vinyl and CDs.
+                          </p>
+                          <p>
+                            His dedication translated into a relentless schedule, with hundreds of gigs under his belt. He toured extensively across his native Russia, while also leaving a massive sonic footprint throughout Czechia, Austria, and Germany. Time and persistence inevitably led to heavy support from genre titans like Noisia, Black Sun Empire, Ed Rush, Pendulum, A.M.C, Mefjus, and Phace, alongside major releases on Titan, Eatbrain, Neuropunk, and C4C Recordings. His music carried him across Europe, landing him on the stages of major festivals such as Let It Roll, Rampage, Neuropunk, and Pirate Station.
+                          </p>
+                          <p>
+                            In 2021, a new biographical chapter unfolded as Tobax relocated to Dresden, Germany. He seamlessly integrated into the local bass music ecosystem, largely through a fruitful collaboration with the UTM crew. Today, in his international performances, he proudly represents both his roots and the German drum &amp; bass scene. His impact on his new home was officially recognized at the Drum &amp; Bass Germany Awards: Tobax was voted 2nd place for Best Producer (East Germany) in 2022, following it up in 2023 with 3rd place for Best Producer and 3rd place for Best Track.
+                          </p>
+                          <p>
+                            Today, Tobax’s sound masterfully blends cinematic sci-fi spaces, extended immersive intros, and direct, visceral neurofunk energy. Every set he plays and every track he writes remains an extension of his lifelong philosophy: building the atmosphere first, and delivering the impact second.
+                          </p>
+                        </div>
+                      )}
+                      {currentLanguage === 'de' && (
+                        <div className="bio-text bio-text--de" lang="de">
+                          <p>
+                            Tobax (bürgerlich Aleksei Strokov, dt. Transkription Alexej Strokow, russ. Алексей Строков) gehört zur mittleren Generation der Drum-&amp;-Bass-Künstler und konzentriert sich vor allem auf Neurofunk; seine frühe Diskografie streifte daneben auch Liquid und Jump-Up. Heute zählt er zu den international angesehensten Drum-&amp;-Bass-Produzenten und DJs, die aus Russland hervorgegangen sind — sein Einfluss reicht weit über seine Heimat hinaus.
+                          </p>
+                          <p>
+                            Lange vor internationalen Flügen und großen Festivalbühnen begann seine musikalische Reise in einem kleinen Zimmer nach der Schule. Mit einem einfachen Kassettenrekorder, einer Drum-Machine und einem Gitarrenprozessor schrieb er schon als Kind seine ersten Stücke und nahm sie direkt auf leere TDK-Kassetten auf. Es war ein roher, handgemachter Prozess, in dem Bandrauschen, Brummen und zufällige Verzerrungen zu natürlichen Bestandteilen des Klangs wurden. Er experimentierte intensiv mit E-Gitarren-Riffs — im Grunde eine Ein-Mann-Band. Dieses frühe Fundament im Rock, verbunden mit einer tiefen Faszination für das Kino, prägte seine kreative Vision von Anfang an. Seit jenen ersten DIY-Aufnahmen versteht er Tracks nicht bloß als Rhythmen, sondern als atmosphärische Räume — Szenen eines Films, der ohne Leinwand läuft.
+                          </p>
+                          <p>
+                            Ernsthaft mit elektronischer Produktion begann er 2010 in Samara, Russland. Der Fortschritt war bewusst langsam — Jahre vergingen mit dem akribischen Erlernen, wie rohe klangliche Wucht und tiefe Atmosphäre im selben Drop koexistieren können. Sein erster Auftritt außerhalb der Heimatstadt fand statt, als er noch minderjährig war; er reiste mit seiner Mutter an — und doch buchten ihn lokale Veranstalter bereits als einen Künstler, der ernsthafte Aufmerksamkeit verlangte. Was mit leeren TDK-Kassetten begann, wuchs zu einer Diskografie von über hundert veröffentlichten Tracks — nicht nur digital, sondern auch auf Vinyl und CD.
+                          </p>
+                          <p>
+                            Seine Hingabe übersetzte sich in einen unerbittlichen Terminkalender mit Hunderten von Gigs. Er tourte ausgiebig durch Russland und hinterließ zugleich deutliche Spuren in Tschechien, Österreich und Deutschland. Zeit und Beharrlichkeit führten zu starkem Support von Genre-Größen wie Noisia, Black Sun Empire, Ed Rush, Pendulum, A.M.C, Mefjus und Phace — neben wichtigen Veröffentlichungen auf Titan, Eatbrain, Neuropunk und C4C Recordings. Seine Musik trug ihn quer durch Europa, auf die Bühnen großer Festivals wie Let It Roll, Rampage, Neuropunk und Pirate Station.
+                          </p>
+                          <p>
+                            2021 begann ein neues biografisches Kapitel: Tobax zog nach Dresden. Er fügte sich nahtlos in die lokale Bass-Music-Szene ein, vor allem durch die fruchtbare Zusammenarbeit mit der UTM-Crew. Bei seinen internationalen Auftritten vertritt er heute mit Stolz sowohl seine Wurzeln als auch die deutsche Drum-&amp;-Bass-Szene. Seine Wirkung in der neuen Heimat wurde bei den Drum &amp; Bass Germany Awards offiziell anerkannt: 2022 wurde Tobax auf Platz 2 als Bester Produzent (Ostdeutschland) gewählt, 2023 folgten Platz 3 als Bester Produzent und Platz 3 für den Besten Track.
+                          </p>
+                          <p>
+                            Heute verbindet der Sound von Tobax cineastische Sci-Fi-Räume, ausgedehnte immersive Intros und direkte, körperlich spürbare Neurofunk-Energie. Jedes Set, das er spielt, und jeder Track, den er schreibt, bleibt eine Fortsetzung seiner lebenslangen Philosophie: zuerst die Atmosphäre aufbauen — dann die Wucht liefern.
+                          </p>
+                        </div>
+                      )}
+                      {currentLanguage === 'ru' && (
+                        <div className="bio-text bio-text--ru" lang="ru">
+                          <p>
+                            Tobax (Алексей Строков) — представитель среднего поколения drum &amp; bass-артистов, работающий прежде всего в жанре нейрофанк, хотя в ранней дискографии он обращался и к liquid, и к jump-up. Сегодня он — один из самых уважаемых на международной сцене drum &amp; bass-продюсеров и диджеев родом из России, чьё влияние давно признано далеко за её пределами.
+                          </p>
+                          <p>
+                            Задолго до международных перелётов и больших фестивальных сцен его музыкальный путь начался в маленькой комнате после школы. С простым кассетным магнитофоном, драм-машиной и гитарным процессором он ещё ребёнком сочинял и записывал первые треки прямо на чистые кассеты TDK. Это был сырой, ручной процесс, в котором шипение ленты, фон и случайные искажения становились естественной частью звука. Он много экспериментировал с риффами электрогитары — по сути, работал как человек-оркестр. Этот ранний рок-фундамент вместе с глубоким увлечением кино рано сформировал его творческое видение. С тех первых DIY-записей он воспринимает треки не просто как ритм, а как атмосферные пространства — сцены фильма, идущего без экрана.
+                          </p>
+                          <p>
+                            Всерьёз заниматься электронной музыкой он начал в 2010 году в Самаре. Прогресс был осознанно неторопливым — годы ушли на то, чтобы понять, как чистая звуковая мощь и глубокая атмосфера могут сосуществовать в одном дропе. Первое выступление за пределами родного города случилось, когда он был ещё несовершеннолетним: туда он поехал с мамой, но местные промоутеры уже бронировали его как артиста, к которому стоит относиться всерьёз. То, что началось с чистых кассет TDK, выросло в дискографию из более чем сотни изданных треков — не только в цифре, но и на виниле и CD.
+                          </p>
+                          <p>
+                            Преданность делу обернулась плотнейшим графиком — за плечами сотни выступлений. Он много гастролировал по России и одновременно оставил заметный след в Чехии, Австрии и Германии. Время и упорство закономерно привели к мощной поддержке от титанов жанра — Noisia, Black Sun Empire, Ed Rush, Pendulum, A.M.C, Mefjus, Phace — и к крупным релизам на лейблах Titan, Eatbrain, Neuropunk и C4C Recordings. Музыка провела его через всю Европу — на сцены таких фестивалей, как Let It Roll, Rampage, Neuropunk и Pirate Station.
+                          </p>
+                          <p>
+                            В 2021 году открылась новая глава: Tobax переехал в Дрезден. Он органично вписался в местную басовую сцену — во многом благодаря плодотворному сотрудничеству с командой UTM. Сегодня на международных выступлениях он с гордостью представляет и свои корни, и немецкую drum &amp; bass-сцену. Его вклад отметили на Drum &amp; Bass Germany Awards: в 2022 году Tobax занял 2-е место в номинации «Лучший продюсер» (Восточная Германия), а в 2023-м — 3-е место как продюсер и 3-е место за лучший трек.
+                          </p>
+                          <p>
+                            Сегодня звук Tobax соединяет кинематографичные sci-fi-пространства, длинные иммерсивные интро и прямую, физически ощутимую энергию нейрофанка. Каждый его сет и каждый написанный трек — продолжение философии всей его жизни: сначала выстроить атмосферу, затем нанести удар.
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </section>
+
+                {/* ---------- SUPPORT — credibility band ---------- */}
+                <section className="section support reveal" aria-label="Recognition">
+                  <img src={monogram} alt="" className="support-mark" aria-hidden="true" />
+                  <div className="section-head">
+                    <span className="kicker">Recognition</span>
+                    <h2 className="section-title">Played &amp; supported</h2>
+                  </div>
+                  <div className="support-rows">
+                    <div className="support-row">
+                      <div className="support-row-label">Supported by</div>
+                      <div className="support-names">
+                        <span>Noisia</span><span>Black Sun Empire</span><span>Ed Rush</span>
+                        <span>Pendulum</span><span>A.M.C</span><span>Mefjus</span><span>Phace</span>
+                      </div>
+                    </div>
+                    <div className="support-row">
+                      <div className="support-row-label">Released on</div>
+                      <div className="support-names">
+                        <span>Titan</span><span>Eatbrain</span><span>Neuropunk</span><span>C4C Recordings</span>
+                      </div>
+                    </div>
+                    <div className="support-row">
+                      <div className="support-row-label">On stage at</div>
+                      <div className="support-names">
+                        <span>Let It Roll</span><span>Rampage</span><span>Neuropunk</span><span>Pirate Station</span>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                {/* ---------- FOLLOW — link hub ---------- */}
+                <section className="section reveal" id="follow" aria-labelledby="follow-title">
+                  <div className="section-head">
+                    <span className="kicker">Follow</span>
+                    <h2 className="section-title" id="follow-title">Listen &amp; follow everywhere</h2>
+                  </div>
+                  <div className="link-hub">
+                    {visibleLinks.map((link) => (
+                      <a key={link.key} href={link.href} target="_blank" rel="noreferrer" className="hub-link" aria-label={link.name}>
+                        <span className="hub-icon"><link.Icon /></span>
+                        <span className="hub-text">
+                          <span className="hub-name">{link.name}</span>
+                          <span className="hub-handle">{link.handle}</span>
+                        </span>
+                        <ArrowIcon />
+                      </a>
+                    ))}
+                  </div>
+                </section>
+
+                {/* ---------- CONTACT — booking / press / mixes / business ---------- */}
+                <section className="section reveal" id="contact" aria-labelledby="contact-title">
+                  <div className="section-head">
+                    <span className="kicker">Booking &amp; Contact</span>
+                    <h2 className="section-title" id="contact-title">Work with Tobax</h2>
+                  </div>
+                  <ContactForm />
+                </section>
+              </div>
             </>
           ) : isImpressumPage ? (
-            <div className="content-section bio-section impressum-section">
-              <div className="impressum-header">
-                <a
-                  className="back-arrow"
-                  href="/"
-                  aria-label="Back to home"
-                  title="Back to home"
-                  onClick={(event) => handlePageNav(event, '/')}
-                />
-              </div>
-              <h2>Impressum</h2>
-              <div className="impressum-content">
-                <p>Angaben gemäß § 5 DDG:</p>
-                <p>
-                  Alexej Strokow (Tobax)
-                  <br />
-                  Borsbergstraße 33
-                  <br />
-                  01309 Dresden
-                </p>
-                <p>Kontakt:</p>
-                <p>
-                  Telefon: <a href="tel:+491726287456">+49 (0) 172 6287456</a>
-                  <br />
-                  E-Mail: <a href="mailto:alextobax@gmail.com">alextobax@gmail.com</a>
-                </p>
-                <p>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:</p>
-                <p>
-                  Alexej Strokow
-                  <br />
-                  Borsbergstraße 33
-                  <br />
-                  01309 Dresden
-                </p>
-                <p>Social Media:</p>
-                <p>Dieses Impressum gilt auch für folgende Social-Media-Profile:</p>
-                <ul>
-                  <li>
-                    <a href="https://soundcloud.com/alex-tobax" target="_blank" rel="noreferrer">Soundcloud</a>
-                  </li>
-                  <li>
-                    <a href="https://www.instagram.com/alextobax/?hl=en" target="_blank" rel="noreferrer">Instagram</a>
-                  </li>
-                  <li>
-                    <a href="https://open.spotify.com/intl-de/artist/2DcPGpnRStvxX5m8JHIStN?si=8SiMryQjToWnxeJ4pV1ybw" target="_blank" rel="noreferrer">Spotify</a>
-                  </li>
-                  <li>
-                    <a href="https://www.facebook.com/ltobax/" target="_blank" rel="noreferrer">Facebook</a>
-                  </li>
-                </ul>
-                <p>EU-Streitschlichtung:</p>
-                <p>
-                  Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
-                  <br />
-                  <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noreferrer">https://ec.europa.eu/consumers/odr/</a>.
-                </p>
-                <p>Unsere E-Mail-Adresse finden Sie oben im Impressum.</p>
-                <p>Verbraucherstreitbeilegung/Universalschlichtungsstelle:</p>
-                <p>
-                  Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
-                </p>
+            <div className="container">
+              <div className="impressum-section">
+                <div className="impressum-header">
+                  <a
+                    className="back-arrow"
+                    href="/"
+                    aria-label="Back to home"
+                    title="Back to home"
+                    onClick={(event) => handlePageNav(event, '/')}
+                  />
+                </div>
+                <h2>Impressum</h2>
+                <div className="impressum-content">
+                  <p>Angaben gemäß § 5 DDG:</p>
+                  <p>
+                    Alexej Strokow (Tobax)
+                    <br />
+                    Borsbergstraße 33
+                    <br />
+                    01309 Dresden
+                  </p>
+                  <p>Kontakt:</p>
+                  <p>
+                    Telefon: <a href="tel:+491726287456">+49 (0) 172 6287456</a>
+                    <br />
+                    E-Mail: <a href="mailto:alextobax@gmail.com">alextobax@gmail.com</a>
+                  </p>
+                  <p>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV:</p>
+                  <p>
+                    Alexej Strokow
+                    <br />
+                    Borsbergstraße 33
+                    <br />
+                    01309 Dresden
+                  </p>
+                  <p>Social Media:</p>
+                  <p>Dieses Impressum gilt auch für folgende Social-Media-Profile:</p>
+                  <ul>
+                    <li>
+                      <a href="https://soundcloud.com/alex-tobax" target="_blank" rel="noreferrer">Soundcloud</a>
+                    </li>
+                    <li>
+                      <a href="https://www.instagram.com/alextobax/?hl=en" target="_blank" rel="noreferrer">Instagram</a>
+                    </li>
+                    <li>
+                      <a href="https://open.spotify.com/intl-de/artist/2DcPGpnRStvxX5m8JHIStN?si=8SiMryQjToWnxeJ4pV1ybw" target="_blank" rel="noreferrer">Spotify</a>
+                    </li>
+                    <li>
+                      <a href="https://www.facebook.com/ltobax/" target="_blank" rel="noreferrer">Facebook</a>
+                    </li>
+                  </ul>
+                  <p>EU-Streitschlichtung:</p>
+                  <p>
+                    Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
+                    <br />
+                    <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noreferrer">https://ec.europa.eu/consumers/odr/</a>.
+                  </p>
+                  <p>Unsere E-Mail-Adresse finden Sie oben im Impressum.</p>
+                  <p>Verbraucherstreitbeilegung/Universalschlichtungsstelle:</p>
+                  <p>
+                    Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.
+                  </p>
+                </div>
               </div>
             </div>
           ) : (
-            <div className="content-section bio-section impressum-section">
-              <div className="impressum-header">
-                <a
-                  className="back-arrow"
-                  href="/"
-                  aria-label="Back to home"
-                  title="Back to home"
-                  onClick={(event) => handlePageNav(event, '/')}
-                />
-              </div>
-              <h2>Datenschutzerklärung</h2>
-              <div className="impressum-content">
-                <p>1. Datenschutz auf einen Blick</p>
-                <p>
-                  Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen.
-                  Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.
-                </p>
-                <p>2. Hosting</p>
-                <p>
-                  Wir hosten die Inhalte unserer Website bei einem externen Anbieter (Hoster). Die personenbezogenen Daten, die auf dieser Website erfasst werden,
-                  werden auf den Servern des Hosters gespeichert.
-                </p>
-                <p>Hierbei kann es sich insbesondere handeln um:</p>
-                <ul>
-                  <li>IP-Adressen</li>
-                  <li>Kontaktanfragen</li>
-                  <li>Meta- und Kommunikationsdaten</li>
-                  <li>Vertragsdaten</li>
-                  <li>Kontaktdaten</li>
-                  <li>Namen</li>
-                  <li>Websitezugriffe</li>
-                  <li>sonstige Daten, die über eine Website generiert werden</li>
-                </ul>
-                <p>
-                  Der Einsatz des Hosters erfolgt zum Zwecke der Vertragserfüllung gegenüber unseren potenziellen und bestehenden Kunden (Art. 6 Abs. 1 lit. b DSGVO)
-                  und im Interesse einer sicheren, schnellen und effizienten Bereitstellung unseres Online-Angebots durch einen professionellen Anbieter (Art. 6 Abs. 1 lit. f DSGVO).
-                </p>
-                <p>3. Allgemeine Hinweise und Pflichtinformationen</p>
-                <p>Verantwortliche Stelle</p>
-                <p>
-                  Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
-                  <br />
-                  Alexej Strokow (Tobax)
-                  <br />
-                  Borsbergstraße 33
-                  <br />
-                  01309 Dresden
-                  <br />
-                  Telefon: <a href="tel:+491726287456">+49 (0) 172 6287456</a>
-                  <br />
-                  E-Mail: <a href="mailto:alextobax@gmail.com">alextobax@gmail.com</a>
-                </p>
-                <p>Ihre Rechte</p>
-                <p>Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf:</p>
-                <ul>
-                  <li>Auskunft über Ihre gespeicherten personenbezogenen Daten</li>
-                  <li>Herkunft und Empfänger dieser Daten</li>
-                  <li>Zweck der Datenverarbeitung</li>
-                  <li>Berichtigung oder Löschung dieser Daten</li>
-                  <li>Einschränkung der Verarbeitung</li>
-                  <li>Datenübertragbarkeit</li>
-                  <li>Widerruf erteilter Einwilligungen</li>
-                </ul>
-                <p>
-                  Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit an uns wenden. Außerdem steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu.
-                </p>
-                <p>SSL- bzw. TLS-Verschlüsselung</p>
-                <p>
-                  Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte eine SSL- bzw. TLS-Verschlüsselung.
-                </p>
-                <p>4. Datenerfassung auf dieser Website</p>
-                <p>Server-Log-Dateien</p>
-                <p>
-                  Der Provider der Seiten erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch übermittelt:
-                </p>
-                <ul>
-                  <li>Browsertyp und Browserversion</li>
-                  <li>verwendetes Betriebssystem</li>
-                  <li>Referrer URL</li>
-                  <li>Hostname des zugreifenden Rechners</li>
-                  <li>Uhrzeit der Serveranfrage</li>
-                  <li>IP-Adresse</li>
-                </ul>
-                <p>
-                  Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
-                  Der Websitebetreiber hat ein berechtigtes Interesse an der technisch fehlerfreien Darstellung und Optimierung seiner Website.
-                </p>
-                <p>Anfrage per E-Mail oder Telefon</p>
-                <p>
-                  Wenn Sie uns per E-Mail oder Telefon kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten (z. B. Name, Anfrageinhalt,
-                  Kontaktdaten) zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet.
-                </p>
-                <p>
-                  Diese Daten werden nicht ohne Ihre Einwilligung weitergegeben. Eine Weitergabe kann jedoch an technische Dienstleister erfolgen (z. B. Hosting-Provider oder E-Mail-Provider),
-                  soweit dies zur Bereitstellung und Sicherheit unserer Kommunikation erforderlich ist.
-                </p>
-                <p>
-                  Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung
-                  vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns
-                  gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO).
-                </p>
-                <p>
-                  Die von Ihnen an uns gesendeten Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung widerrufen oder der Zweck der Datenspeicherung entfällt.
-                  Gesetzliche Aufbewahrungsfristen, insbesondere nach §147 AO und §257 HGB, bleiben unberührt.
-                </p>
-                <p>Cookies</p>
-                <p>
-                  Unsere Internetseiten verwenden so genannte „Cookies“. Cookies sind kleine Datenpakete und richten auf Ihrem Endgerät keinen Schaden an. Wir verwenden auf dieser Website ausschließlich technisch notwendige Cookies, die zur Ausübung des elektronischen Kommunikationsvorgangs oder zur Bereitstellung bestimmter, von Ihnen erwünschter Funktionen (z. B. Funktionen des lokalen Audio-Players) erforderlich sind. Die Speicherung dieser technisch notwendigen Cookies erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Wir haben ein berechtigtes Interesse an der Speicherung von Cookies zur technisch fehlerfreien und optimierten Bereitstellung unserer Dienste.
-                </p>
-                <p>
-                  Wir verwenden keine zustimmungspflichtigen Analyse- oder Tracking-Cookies (wie z. B. Google Analytics) und binden keine externen Medien-Player (wie Spotify oder YouTube) direkt ein, die das Setzen von Drittanbieter-Cookies erfordern. Daher ist auf dieser Website kein Cookie-Consent-Banner erforderlich.
-                </p>
-                <p>Lokaler Audio-Player</p>
-                <p>
-                  Wir bieten auf unserer Website einen Audio-Player an, um eigene Musikstücke (Self-Releases) abzuspielen. Die Audiodateien werden lokal auf den Servern unseres Hosters gespeichert. Es findet keine Datenübertragung an externe Streaming-Dienstleister (wie z. B. Spotify oder SoundCloud) statt, wenn Sie die Musik auf unserer Seite abspielen.
-                </p>
-                <p>Externe Links (Social Media & Streaming-Dienste)</p>
-                <p>
-                  Auf unserer Website finden Sie lediglich Verlinkungen (Hyperlinks) zu unseren Profilen bei externen Streaming-Diensten und sozialen Netzwerken (z. B. Spotify, YouTube, Instagram). Wenn Sie auf diese Links klicken, verlassen Sie unsere Website. Erst nach dem Klick werden Daten an die jeweiligen Betreiber der Netzwerke übertragen. Wir haben keinen Einfluss auf die dortige Datenverarbeitung. Es gelten die Datenschutzerklärungen der jeweiligen Anbieter.
-                </p>
+            <div className="container">
+              <div className="impressum-section">
+                <div className="impressum-header">
+                  <a
+                    className="back-arrow"
+                    href="/"
+                    aria-label="Back to home"
+                    title="Back to home"
+                    onClick={(event) => handlePageNav(event, '/')}
+                  />
+                </div>
+                <h2>Datenschutzerklärung</h2>
+                <div className="impressum-content">
+                  <p>1. Datenschutz auf einen Blick</p>
+                  <p>
+                    Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen.
+                    Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.
+                  </p>
+                  <p>2. Hosting</p>
+                  <p>
+                    Wir hosten die Inhalte unserer Website bei einem externen Anbieter (Hoster). Die personenbezogenen Daten, die auf dieser Website erfasst werden,
+                    werden auf den Servern des Hosters gespeichert.
+                  </p>
+                  <p>Hierbei kann es sich insbesondere handeln um:</p>
+                  <ul>
+                    <li>IP-Adressen</li>
+                    <li>Kontaktanfragen</li>
+                    <li>Meta- und Kommunikationsdaten</li>
+                    <li>Vertragsdaten</li>
+                    <li>Kontaktdaten</li>
+                    <li>Namen</li>
+                    <li>Websitezugriffe</li>
+                    <li>sonstige Daten, die über eine Website generiert werden</li>
+                  </ul>
+                  <p>
+                    Der Einsatz des Hosters erfolgt zum Zwecke der Vertragserfüllung gegenüber unseren potenziellen und bestehenden Kunden (Art. 6 Abs. 1 lit. b DSGVO)
+                    und im Interesse einer sicheren, schnellen und effizienten Bereitstellung unseres Online-Angebots durch einen professionellen Anbieter (Art. 6 Abs. 1 lit. f DSGVO).
+                  </p>
+                  <p>3. Allgemeine Hinweise und Pflichtinformationen</p>
+                  <p>Verantwortliche Stelle</p>
+                  <p>
+                    Die verantwortliche Stelle für die Datenverarbeitung auf dieser Website ist:
+                    <br />
+                    Alexej Strokow (Tobax)
+                    <br />
+                    Borsbergstraße 33
+                    <br />
+                    01309 Dresden
+                    <br />
+                    Telefon: <a href="tel:+491726287456">+49 (0) 172 6287456</a>
+                    <br />
+                    E-Mail: <a href="mailto:alextobax@gmail.com">alextobax@gmail.com</a>
+                  </p>
+                  <p>Ihre Rechte</p>
+                  <p>Sie haben im Rahmen der geltenden gesetzlichen Bestimmungen jederzeit das Recht auf:</p>
+                  <ul>
+                    <li>Auskunft über Ihre gespeicherten personenbezogenen Daten</li>
+                    <li>Herkunft und Empfänger dieser Daten</li>
+                    <li>Zweck der Datenverarbeitung</li>
+                    <li>Berichtigung oder Löschung dieser Daten</li>
+                    <li>Einschränkung der Verarbeitung</li>
+                    <li>Datenübertragbarkeit</li>
+                    <li>Widerruf erteilter Einwilligungen</li>
+                  </ul>
+                  <p>
+                    Hierzu sowie zu weiteren Fragen zum Thema Datenschutz können Sie sich jederzeit an uns wenden. Außerdem steht Ihnen ein Beschwerderecht bei der zuständigen Aufsichtsbehörde zu.
+                  </p>
+                  <p>SSL- bzw. TLS-Verschlüsselung</p>
+                  <p>
+                    Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte eine SSL- bzw. TLS-Verschlüsselung.
+                  </p>
+                  <p>4. Datenerfassung auf dieser Website</p>
+                  <p>Server-Log-Dateien</p>
+                  <p>
+                    Der Provider der Seiten erhebt und speichert automatisch Informationen in sogenannten Server-Log-Dateien, die Ihr Browser automatisch übermittelt:
+                  </p>
+                  <ul>
+                    <li>Browsertyp und Browserversion</li>
+                    <li>verwendetes Betriebssystem</li>
+                    <li>Referrer URL</li>
+                    <li>Hostname des zugreifenden Rechners</li>
+                    <li>Uhrzeit der Serveranfrage</li>
+                    <li>IP-Adresse</li>
+                  </ul>
+                  <p>
+                    Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen. Die Erfassung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO.
+                    Der Websitebetreiber hat ein berechtigtes Interesse an der technisch fehlerfreien Darstellung und Optimierung seiner Website.
+                  </p>
+                  <p>Anfrage per E-Mail oder Telefon</p>
+                  <p>
+                    Wenn Sie uns per E-Mail oder Telefon kontaktieren, wird Ihre Anfrage inklusive aller daraus hervorgehenden personenbezogenen Daten (z. B. Name, Anfrageinhalt,
+                    Kontaktdaten) zum Zwecke der Bearbeitung Ihres Anliegens bei uns gespeichert und verarbeitet.
+                  </p>
+                  <p>
+                    Diese Daten werden nicht ohne Ihre Einwilligung weitergegeben. Eine Weitergabe kann jedoch an technische Dienstleister erfolgen (z. B. Hosting-Provider oder E-Mail-Provider),
+                    soweit dies zur Bereitstellung und Sicherheit unserer Kommunikation erforderlich ist.
+                  </p>
+                  <p>
+                    Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO, sofern Ihre Anfrage mit der Erfüllung eines Vertrags zusammenhängt oder zur Durchführung
+                    vorvertraglicher Maßnahmen erforderlich ist. In allen übrigen Fällen beruht die Verarbeitung auf unserem berechtigten Interesse an der effektiven Bearbeitung der an uns
+                    gerichteten Anfragen (Art. 6 Abs. 1 lit. f DSGVO) oder auf Ihrer Einwilligung (Art. 6 Abs. 1 lit. a DSGVO).
+                  </p>
+                  <p>
+                    Die von Ihnen an uns gesendeten Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung widerrufen oder der Zweck der Datenspeicherung entfällt.
+                    Gesetzliche Aufbewahrungsfristen, insbesondere nach §147 AO und §257 HGB, bleiben unberührt.
+                  </p>
+                  <p>Cookies</p>
+                  <p>
+                    Unsere Internetseiten verwenden so genannte „Cookies“. Cookies sind kleine Datenpakete und richten auf Ihrem Endgerät keinen Schaden an. Wir verwenden auf dieser Website ausschließlich technisch notwendige Cookies, die zur Ausübung des elektronischen Kommunikationsvorgangs oder zur Bereitstellung bestimmter, von Ihnen erwünschter Funktionen (z. B. Funktionen des lokalen Audio-Players) erforderlich sind. Die Speicherung dieser technisch notwendigen Cookies erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Wir haben ein berechtigtes Interesse an der Speicherung von Cookies zur technisch fehlerfreien und optimierten Bereitstellung unserer Dienste.
+                  </p>
+                  <p>
+                    Wir verwenden keine zustimmungspflichtigen Analyse- oder Tracking-Cookies (wie z. B. Google Analytics). Externe Medien-Player (z. B. Spotify) binden wir ausschließlich über eine sogenannte „2-Klick-Lösung“ (Click-to-Load) ein: Der Player wird erst geladen, nachdem Sie aktiv darauf geklickt und damit eingewilligt haben. Vor diesem Klick werden keine Daten an den jeweiligen Anbieter übertragen und keine Drittanbieter-Cookies gesetzt. Daher ist beim bloßen Aufruf dieser Website kein Cookie-Consent-Banner erforderlich.
+                  </p>
+                  <p>Lokaler Audio-Player</p>
+                  <p>
+                    Wir bieten auf unserer Website einen Audio-Player an, um eigene Musikstücke (Self-Releases) abzuspielen. Die Audiodateien werden lokal auf den Servern unseres Hosters gespeichert. Es findet keine Datenübertragung an externe Streaming-Dienstleister (wie z. B. Spotify oder SoundCloud) statt, wenn Sie die Musik auf unserer Seite abspielen.
+                  </p>
+                  <p>Spotify-Player (2-Klick-Lösung / Click-to-Load)</p>
+                  <p>
+                    Auf unserer Website bieten wir die Möglichkeit, Musik über einen eingebetteten Player von Spotify abzuspielen. Anbieter ist die Spotify AB, Regeringsgatan 19, 111 53 Stockholm, Schweden. Der Player wird aus Datenschutzgründen nicht automatisch geladen. Erst wenn Sie aktiv auf „Spotify-Player laden“ klicken, wird eine Verbindung zu den Servern von Spotify hergestellt und der Player nachgeladen. Dabei können Ihre IP-Adresse sowie weitere Daten an Spotify übermittelt und Cookies gesetzt werden; eine Übermittlung in die USA ist möglich. Rechtsgrundlage ist Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die Sie durch den Klick erteilen und jederzeit mit Wirkung für die Zukunft widerrufen können. Einzelheiten zur Datenverarbeitung durch Spotify finden Sie unter{' '}
+                    <a href="https://www.spotify.com/legal/privacy-policy/" target="_blank" rel="noreferrer">https://www.spotify.com/legal/privacy-policy/</a>.
+                  </p>
+                  <p>Externe Links (Social Media &amp; Streaming-Dienste)</p>
+                  <p>
+                    Auf unserer Website finden Sie lediglich Verlinkungen (Hyperlinks) zu unseren Profilen bei externen Streaming-Diensten und sozialen Netzwerken (z. B. Spotify, YouTube, Instagram). Wenn Sie auf diese Links klicken, verlassen Sie unsere Website. Erst nach dem Klick werden Daten an die jeweiligen Betreiber der Netzwerke übertragen. Wir haben keinen Einfluss auf die dortige Datenverarbeitung. Es gelten die Datenschutzerklärungen der jeweiligen Anbieter.
+                  </p>
+                </div>
               </div>
             </div>
           )}
+
+          {/* ---------- Persistent footer ---------- */}
+          <footer className="site-footer-legal">
+            <div className="footer-inner">
+              <span className="footer-brand">
+                <img src={monogram} alt="" />
+                © 2026 Tobax · Aleksei Strokov
+              </span>
+              <nav className="impressum-links" aria-label="Legal">
+                <a className="impressum-link" href="/impressum" onClick={(event) => handlePageNav(event, '/impressum')}>
+                  Impressum
+                </a>
+                <a
+                  className="impressum-link"
+                  href="/datenschutzerklaerung"
+                  onClick={(event) => handlePageNav(event, '/datenschutzerklaerung')}
+                >
+                  Datenschutzerklärung
+                </a>
+              </nav>
+              <span className="footer-credit">Photography · Max Khrabrov</span>
+            </div>
+          </footer>
         </div>
-      </div>
+      </main>
     </div>
   )
 }

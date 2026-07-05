@@ -1,93 +1,45 @@
-# Tobax Website
+# Tobax — Official Website
 
-Official website for Tobax (Alexej Strokow), a drum & bass music artist specializing in neurofunk.
+Official website of **Tobax** (Aleksei Strokov / Alexej Strokow) — drum & bass producer and DJ
+specializing in neurofunk, based in Dresden, Germany. Live at **[tobax.online](https://tobax.online)**.
 
-## Features
+Biography (EN/DE/RU), music via a local self-hosted player, news & show announcements (planned),
+built to be the canonical source about the artist for search engines and AI assistants.
 
-- **Audio Player**: Custom-built audio player with track preview
-- **Biography**: Comprehensive artist biography and musical journey
-- **Responsive Design**: Optimized for desktop and mobile devices
-- **Modern UI**: Clean, minimalist design with custom typography
-- **Animated Elements**: Smooth transitions and gradient animations
+## Stack
 
-## Tech Stack
+- **React 19 + Vite 7**, plain CSS (custom "Reactor" design system — see [docs/DESIGN.md](docs/DESIGN.md))
+- No CSS frameworks, no trackers, no cookies requiring consent
+- Media pipeline: `sharp` → AVIF/WebP/JPG (`npm run optimize:media`)
+- SEO/AEO: JSON-LD (`Person` + `MusicGroup`), Open Graph, sitemap, robots, `noscript` fallback
 
-- **React** - UI framework
-- **Vite** - Build tool and dev server
-- **CSS3** - Styling with custom animations
-- **ESLint** - Code quality and consistency
+## Development
 
-## Project Structure
-
-```
-tobax-website/
-├── src/
-│   ├── components/
-│   │   └── AudioPlayer.jsx    # Custom audio player component
-│   ├── assets/                # Images and media files
-│   ├── App.jsx                # Main application component
-│   ├── App.css                # Global styles
-│   └── main.jsx               # Application entry point
-├── public/                    # Static assets
-├── index.html                 # HTML template
-└── vite.config.js            # Vite configuration
-```
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v16 or higher)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/tobax-website.git
-cd tobax-website
+npm ci               # install
+npm run dev          # dev server (Vite)
+npm run build        # production build -> dist/
+npm run preview      # preview the production build
+npm run lint         # ESLint
+npm run optimize:media  # regenerate optimized images (AVIF/WebP/JPG + og-image)
 ```
 
-2. Install dependencies:
-```bash
-npm install
-```
+## Project docs
 
-3. Start the development server:
-```bash
-npm run dev
-```
+| File | Purpose |
+| --- | --- |
+| [CLAUDE.md](CLAUDE.md) | Working instructions, goals, standing requirements |
+| [docs/DESIGN.md](docs/DESIGN.md) | Design system & visual direction ("Reactor") |
+| [docs/TASKS.md](docs/TASKS.md) | Prioritized task backlog |
+| [docs/IDEAS.md](docs/IDEAS.md) | Idea base |
+| [docs/DEPLOY.md](docs/DEPLOY.md) | Hetzner + nginx deployment guide |
 
-4. Open your browser and navigate to `http://localhost:5173`
+## Deployment
 
-## Available Scripts
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-- `npm run lint` - Run ESLint
-
-## Design Features
-
-- **Typography**: Exo 2 font with thin weight (200-300) and uppercase styling
-- **Background**: Grayscale background image with enhanced contrast and vignetting
-- **Color Scheme**: Dark theme with red accent colors
-- **Audio Player**: Minimalist design with animated gradient sliders
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
+Static build served by nginx on a Hetzner server with HTTPS (Let's Encrypt), SPA fallback,
+gzip and security headers — see [docs/DEPLOY.md](docs/DEPLOY.md) and
+[deploy/nginx-tobax.conf](deploy/nginx-tobax.conf).
 
 ## License
 
-All rights reserved. This website and its contents are property of Tobax (Alexej Strokow).
-
-## Contact
-
-For inquiries, please visit:
-- [SoundCloud](https://soundcloud.com/alex-tobax)
-- [Spotify](https://open.spotify.com)
-
+All rights reserved. Website and contents are property of Tobax (Aleksei Strokov).

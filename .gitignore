@@ -2,13 +2,28 @@ node_modules/
 dist/
 build/
 .env
+.env.*
+!.env.example
 .DS_Store
 .vite/
 /.idea
 /.vscode
 npm-debug.log
 yarn-error.log
-package-lock.json# Logs
+package-lock.json
+
+# Secret files (never commit)
+*.pem
+*.key
+*.p12
+*.pfx
+*token*
+*secret*
+*credentials*
+copilot.key
+copilot-token*
+
+# Logs
 logs
 *.log
 npm-debug.log*
@@ -21,6 +36,9 @@ node_modules
 dist
 dist-ssr
 *.local
+
+# Claude Code — commit shared skills/config, keep local personal settings out
+.claude/settings.local.json
 
 # Editor directories and files
 .vscode/*

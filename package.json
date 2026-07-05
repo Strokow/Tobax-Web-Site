@@ -1,5 +1,5 @@
 {
-  "name": "task-manager",
+  "name": "tobax-website",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,16 +7,15 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "optimize:media": "node scripts/optimize-media.mjs"
   },
   "dependencies": {
-    "bootstrap": "^5.3.8",
-    "bulma": "^1.0.4",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "sharp": "^0.34.5"
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
+    "sharp": "^0.34.5",
     "@eslint/js": "^9.39.1",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",

@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import '../App.css'
 
-export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
+export default function AudioPlayer({ audioSrc, coverSrc, coverWebp, coverAvif, artist, title, variant }) {
+  const isFeature = variant === 'feature'
   const audioRef = useRef(null)
   const [playing, setPlaying] = useState(false)
   const [duration, setDuration] = useState(0)
@@ -75,12 +76,25 @@ export default function AudioPlayer({ audioSrc, coverSrc, artist, title }) {
     <div className={`audio-player ${seekDragging ? 'dragging' : ''}`}>
       <audio ref={audioRef} src={audioSrc} preload="metadata" />
       <div className="player-row">
-        <div className="player-meta-inline">{artist} - {title}</div>
-        {coverSrc ? (
-          <img src={coverSrc} alt={`${artist} - ${title}`} className="player-cover-image" />
-        ) : (
-          <div className="player-cover-placeholder" />
-        )}
+        {!isFeature && <div className="player-meta-inline">{artist} - {title}</div>}
+        {!isFeature &&
+          (coverSrc ? (
+            <picture>
+              {coverAvif && <source srcSet={coverAvif} type="image/avif" />}
+              {coverWebp && <source srcSet={coverWebp} type="image/webp" />}
+              <img
+                src={coverSrc}
+                alt={`${artist} - ${title}`}
+                className="player-cover-image"
+                width="48"
+                height="48"
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
+          ) : (
+            <div className="player-cover-placeholder" />
+          ))}
         <button
           className={`play-btn ${playing ? 'playing' : ''}`}
           onClick={togglePlay}
