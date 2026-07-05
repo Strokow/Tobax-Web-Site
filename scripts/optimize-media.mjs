@@ -19,22 +19,31 @@ const jobs = [
   { input: 'bild4.jpg', out: 'bild4', width: 1400 },
   // Full-bleed background — grayscale-filtered anyway; 2000px is enough.
   { input: 'bild2.jpg', out: 'bild2-bg', width: 2000 },
+  // Full-bleed hero backgrounds — they fill the whole viewport, so they need
+  // higher resolution + quality to stay crisp on large / retina (2x) screens.
+  // AVIF stays efficient enough that files remain small even at these settings.
+  { input: 'bild5.jpg', out: 'bild5-bg', width: 2560, q: { avif: 64, webp: 82, jpg: 86 }, effort: 6 },
+  { input: 'bild6.jpg', out: 'bild6-bg', width: 2560, q: { avif: 64, webp: 82, jpg: 86 }, effort: 6 },
+  { input: 'BonPhoto_1_of_1.jpg', out: 'bonphoto-bg', width: 2880, q: { avif: 66, webp: 84, jpg: 88 }, effort: 6, sharpen: true },
 ]
 
 const kb = (n) => `${(n / 1024).toFixed(1)} KB`
 
 for (const job of jobs) {
-  const base = sharp(join(srcDir, job.input)).resize({
+  let base = sharp(join(srcDir, job.input)).resize({
     width: job.width,
     height: job.height,
     fit: job.fit || 'inside',
     withoutEnlargement: true,
   })
+  // Light sharpen to recover crispness lost when downscaling a much larger source.
+  if (job.sharpen) base = base.sharpen({ sigma: 0.8 })
 
+  const q = job.q || {}
   const outputs = [
-    { ext: 'avif', opts: { quality: 50, effort: 4 } },
-    { ext: 'webp', opts: { quality: 72 } },
-    { ext: 'jpg', opts: { quality: 78, mozjpeg: true } },
+    { ext: 'avif', opts: { quality: q.avif ?? 50, effort: job.effort ?? 4 } },
+    { ext: 'webp', opts: { quality: q.webp ?? 72 } },
+    { ext: 'jpg', opts: { quality: q.jpg ?? 78, mozjpeg: true } },
   ]
 
   for (const { ext, opts } of outputs) {

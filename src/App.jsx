@@ -2,12 +2,11 @@ import './App.css'
 import AudioPlayer from './components/AudioPlayer'
 import SpotifyEmbed from './components/SpotifyEmbed'
 import ContactForm from './components/ContactForm'
+import BandsintownEmbed from './components/BandsintownEmbed'
 import { useEffect, useState } from 'react'
 import logotypeImage from './assets/optimized/tobax-wordmark.png'
 import monogram from './assets/tobax-logo.png'
-import heroAvif from './assets/optimized/bild2-bg.avif'
-import heroWebp from './assets/optimized/bild2-bg.webp'
-import heroJpg from './assets/optimized/bild2-bg.jpg'
+import heroBg from './assets/bild7.png'
 import bioImageAvif from './assets/optimized/bild4.avif'
 import bioImageWebp from './assets/optimized/bild4.webp'
 import bioImageJpg from './assets/optimized/bild4.jpg'
@@ -92,19 +91,15 @@ function ArrowIcon() {
 }
 
 const LINKS = [
-  { key: 'soundcloud', name: 'SoundCloud', handle: 'alex-tobax', href: 'https://soundcloud.com/alex-tobax', Icon: SoundCloudIcon },
-  { key: 'spotify', name: 'Spotify', handle: 'Tobax', href: 'https://open.spotify.com/intl-de/artist/2DcPGpnRStvxX5m8JHIStN?si=8SiMryQjToWnxeJ4pV1ybw', Icon: SpotifyIcon },
-  { key: 'beatport', name: 'Beatport', handle: 'artist / tobax', href: 'https://www.beatport.com/artist/tobax/186408?srsltid=AfmBOooYFUS2XlXAk6JKua0VRExgGGf4mJbIPAzCWwCgyUriEmwehVVE', Icon: BeatportIcon },
-  { key: 'instagram', name: 'Instagram', handle: '@alextobax', href: 'https://www.instagram.com/alextobax/?hl=en', Icon: InstagramIcon, hideForRu: true },
-  { key: 'vk', name: 'VK', handle: 'vk.com/tobax', href: 'https://vk.com/tobax', Icon: VkIcon },
-  { key: 'yandex', name: 'Yandex Music', handle: 'artist / 723217', href: 'https://music.yandex.ru/artist/723217', Icon: YandexMusicIcon },
+  { key: 'soundcloud', name: 'SoundCloud', href: 'https://soundcloud.com/alex-tobax', Icon: SoundCloudIcon },
+  { key: 'spotify', name: 'Spotify', href: 'https://open.spotify.com/intl-de/artist/2DcPGpnRStvxX5m8JHIStN?si=8SiMryQjToWnxeJ4pV1ybw', Icon: SpotifyIcon },
+  { key: 'beatport', name: 'Beatport', href: 'https://www.beatport.com/artist/tobax/186408?srsltid=AfmBOooYFUS2XlXAk6JKua0VRExgGGf4mJbIPAzCWwCgyUriEmwehVVE', Icon: BeatportIcon },
+  { key: 'instagram', name: 'Instagram', href: 'https://www.instagram.com/alextobax/?hl=en', Icon: InstagramIcon, hideForRu: true },
+  { key: 'vk', name: 'VK', href: 'https://vk.com/tobax', Icon: VkIcon },
+  { key: 'yandex', name: 'Yandex Music', href: 'https://music.yandex.ru/artist/723217', Icon: YandexMusicIcon },
 ]
 
-const BIO_QUOTE = {
-  en: 'Build the atmosphere first. Deliver the impact second.',
-  de: 'Zuerst die Atmosphäre. Dann die Wucht.',
-  ru: 'Сначала атмосфера. Потом удар.',
-}
+const BIO_QUOTE = 'Build the atmosphere first. Deliver the impact second.'
 
 const SPOTIFY_EMBED_SRC =
   'https://open.spotify.com/embed/artist/2DcPGpnRStvxX5m8JHIStN?utm_source=generator&theme=0'
@@ -112,7 +107,7 @@ const SPOTIFY_EMBED_SRC =
 function App() {
   const [isRussianIp, setIsRussianIp] = useState(false)
   const [isPageVisible, setIsPageVisible] = useState(false)
-  const [currentLanguage, setCurrentLanguage] = useState('en')
+  const [isScrolled, setIsScrolled] = useState(false)
   const isImpressumPage = typeof window !== 'undefined' && window.location.pathname === '/impressum'
   const isDatenschutzPage = typeof window !== 'undefined' && window.location.pathname === '/datenschutzerklaerung'
   const isLegalPage = isImpressumPage || isDatenschutzPage
@@ -194,6 +189,14 @@ function App() {
     return () => io.disconnect()
   }, [])
 
+  // Shrink & dim the header once the user scrolls into the content
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 24)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   const handlePageNav = (event, targetPath) => {
     event.preventDefault()
     if (typeof window === 'undefined' || window.location.pathname === targetPath) return
@@ -207,17 +210,16 @@ function App() {
 
   return (
     <div className="page-root">
-      <header className="site-header">
+      <header className={`site-header ${isScrolled || isLegalPage ? 'is-scrolled' : ''}`}>
         <a className="brand" href="/" onClick={(event) => handlePageNav(event, '/')} aria-label="Tobax — home">
-          <img src={monogram} alt="" className="brand-mark" />
           <img src={logotypeImage} alt="Tobax" className="brand-wordmark" />
         </a>
         {!isLegalPage && (
           <nav className="site-nav" aria-label="Sections">
-            <a href="#listen" className="nav-cta">Listen</a>
             <a href="#bio">Bio</a>
+            <a href="#shows">Shows</a>
             <a href="#follow">Follow</a>
-            <a href="#contact">Booking</a>
+            <a href="#contact" className="nav-cta">Booking</a>
           </nav>
         )}
       </header>
@@ -229,17 +231,11 @@ function App() {
               {/* ---------- HERO — cinematic thesis ---------- */}
               <section className="hero" aria-label="Tobax">
                 <div className="hero-media">
-                  <picture>
-                    <source srcSet={heroAvif} type="image/avif" />
-                    <source srcSet={heroWebp} type="image/webp" />
-                    <img src={heroJpg} alt="Tobax performing to a packed club, his name lit on the stage screen" fetchPriority="high" />
-                  </picture>
+                  <img src={heroBg} alt="Tobax live — silhouetted crowd with raised hands facing the blue-lit stage, his name on the screen" fetchPriority="high" />
                 </div>
                 <div className="hero-scrim" />
                 <div className="hero-inner">
-                  <p className="hero-eyebrow">Neurofunk · Drum &amp; Bass · Dresden</p>
                   <h1 className="hero-wordmark-wrap">
-                    <img src={logotypeImage} alt="Tobax" className="hero-wordmark" />
                     <span className="visually-hidden">
                       Tobax — Aleksei Strokov, neurofunk drum &amp; bass producer and DJ based in Dresden, Germany.
                     </span>
@@ -251,39 +247,11 @@ function App() {
                     <a className="btn btn--primary" href="#listen">
                       <span className="btn-play-glyph">▶</span> Listen
                     </a>
-                    <a className="btn btn--ghost" href="#follow">Follow</a>
                   </div>
                 </div>
-                <span className="hero-credit">Photo · Max Khrabrov</span>
               </section>
 
               <div className="container">
-                {/* ---------- FACTS — data as data ---------- */}
-                <section className="section reveal" aria-label="Key facts">
-                  <div className="facts-grid">
-                    <div className="fact">
-                      <div className="fact-label">Genre</div>
-                      <div className="fact-value">Neurofunk · <span className="accent">Drum &amp; Bass</span></div>
-                    </div>
-                    <div className="fact">
-                      <div className="fact-label">Based in</div>
-                      <div className="fact-value">Dresden, Germany</div>
-                    </div>
-                    <div className="fact">
-                      <div className="fact-label">From</div>
-                      <div className="fact-value">Samara, Russia</div>
-                    </div>
-                    <div className="fact">
-                      <div className="fact-label">Labels</div>
-                      <div className="fact-value">Titan · Eatbrain · Neuropunk · C4C</div>
-                    </div>
-                    <div className="fact">
-                      <div className="fact-label">Awards</div>
-                      <div className="fact-value">DnB Germany · 2022 / 2023</div>
-                    </div>
-                  </div>
-                </section>
-
                 {/* ---------- LISTEN — featured self-release ---------- */}
                 <section className="section reveal" id="listen" aria-labelledby="listen-title">
                   <div className="section-head">
@@ -337,30 +305,15 @@ function App() {
                         <source srcSet={bioImageWebp} type="image/webp" />
                         <img src={bioImageJpg} alt="Tobax behind the decks under red and blue stage light" loading="lazy" decoding="async" />
                       </picture>
-                      <figcaption>Tobax — live · Photo Max Khrabrov</figcaption>
+                      <figcaption>Tobax — live</figcaption>
                     </figure>
 
                     <div className="bio-main">
-                      <div className="bio-header">
-                        <blockquote className="bio-quote" lang={currentLanguage}>
-                          {BIO_QUOTE[currentLanguage]}
-                        </blockquote>
-                        <div className="language-switcher-buttons" role="group" aria-label="Biography language">
-                          {['en', 'de', 'ru'].map((lang) => (
-                            <button
-                              key={lang}
-                              className={`lang-btn ${currentLanguage === lang ? 'active' : ''}`}
-                              onClick={() => setCurrentLanguage(lang)}
-                              aria-pressed={currentLanguage === lang}
-                            >
-                              {lang.toUpperCase()}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
+                      <blockquote className="bio-quote" lang="en">
+                        {BIO_QUOTE}
+                      </blockquote>
 
-                      {currentLanguage === 'en' && (
-                        <div className="bio-text bio-text--en" lang="en">
+                      <div className="bio-text bio-text--en" lang="en">
                           <p>
                             Tobax (eng. Aleksei Strokov, ger. Alexej Strokow, ru. Алексей Строков) represents the mid-generation of drum &amp; bass artists, primarily focused on neurofunk, though his formative discography also explored Liquid and Jump Up. Today, he stands as one of the most internationally respected drum &amp; bass producers and DJs to emerge from Russia, his influence deeply acknowledged far beyond his homeland.
                           </p>
@@ -380,51 +333,6 @@ function App() {
                             Today, Tobax’s sound masterfully blends cinematic sci-fi spaces, extended immersive intros, and direct, visceral neurofunk energy. Every set he plays and every track he writes remains an extension of his lifelong philosophy: building the atmosphere first, and delivering the impact second.
                           </p>
                         </div>
-                      )}
-                      {currentLanguage === 'de' && (
-                        <div className="bio-text bio-text--de" lang="de">
-                          <p>
-                            Tobax (bürgerlich Aleksei Strokov, dt. Transkription Alexej Strokow, russ. Алексей Строков) gehört zur mittleren Generation der Drum-&amp;-Bass-Künstler und konzentriert sich vor allem auf Neurofunk; seine frühe Diskografie streifte daneben auch Liquid und Jump-Up. Heute zählt er zu den international angesehensten Drum-&amp;-Bass-Produzenten und DJs, die aus Russland hervorgegangen sind — sein Einfluss reicht weit über seine Heimat hinaus.
-                          </p>
-                          <p>
-                            Lange vor internationalen Flügen und großen Festivalbühnen begann seine musikalische Reise in einem kleinen Zimmer nach der Schule. Mit einem einfachen Kassettenrekorder, einer Drum-Machine und einem Gitarrenprozessor schrieb er schon als Kind seine ersten Stücke und nahm sie direkt auf leere TDK-Kassetten auf. Es war ein roher, handgemachter Prozess, in dem Bandrauschen, Brummen und zufällige Verzerrungen zu natürlichen Bestandteilen des Klangs wurden. Er experimentierte intensiv mit E-Gitarren-Riffs — im Grunde eine Ein-Mann-Band. Dieses frühe Fundament im Rock, verbunden mit einer tiefen Faszination für das Kino, prägte seine kreative Vision von Anfang an. Seit jenen ersten DIY-Aufnahmen versteht er Tracks nicht bloß als Rhythmen, sondern als atmosphärische Räume — Szenen eines Films, der ohne Leinwand läuft.
-                          </p>
-                          <p>
-                            Ernsthaft mit elektronischer Produktion begann er 2010 in Samara, Russland. Der Fortschritt war bewusst langsam — Jahre vergingen mit dem akribischen Erlernen, wie rohe klangliche Wucht und tiefe Atmosphäre im selben Drop koexistieren können. Sein erster Auftritt außerhalb der Heimatstadt fand statt, als er noch minderjährig war; er reiste mit seiner Mutter an — und doch buchten ihn lokale Veranstalter bereits als einen Künstler, der ernsthafte Aufmerksamkeit verlangte. Was mit leeren TDK-Kassetten begann, wuchs zu einer Diskografie von über hundert veröffentlichten Tracks — nicht nur digital, sondern auch auf Vinyl und CD.
-                          </p>
-                          <p>
-                            Seine Hingabe übersetzte sich in einen unerbittlichen Terminkalender mit Hunderten von Gigs. Er tourte ausgiebig durch Russland und hinterließ zugleich deutliche Spuren in Tschechien, Österreich und Deutschland. Zeit und Beharrlichkeit führten zu starkem Support von Genre-Größen wie Noisia, Black Sun Empire, Ed Rush, Pendulum, A.M.C, Mefjus und Phace — neben wichtigen Veröffentlichungen auf Titan, Eatbrain, Neuropunk und C4C Recordings. Seine Musik trug ihn quer durch Europa, auf die Bühnen großer Festivals wie Let It Roll, Rampage, Neuropunk und Pirate Station.
-                          </p>
-                          <p>
-                            2021 begann ein neues biografisches Kapitel: Tobax zog nach Dresden. Er fügte sich nahtlos in die lokale Bass-Music-Szene ein, vor allem durch die fruchtbare Zusammenarbeit mit der UTM-Crew. Bei seinen internationalen Auftritten vertritt er heute mit Stolz sowohl seine Wurzeln als auch die deutsche Drum-&amp;-Bass-Szene. Seine Wirkung in der neuen Heimat wurde bei den Drum &amp; Bass Germany Awards offiziell anerkannt: 2022 wurde Tobax auf Platz 2 als Bester Produzent (Ostdeutschland) gewählt, 2023 folgten Platz 3 als Bester Produzent und Platz 3 für den Besten Track.
-                          </p>
-                          <p>
-                            Heute verbindet der Sound von Tobax cineastische Sci-Fi-Räume, ausgedehnte immersive Intros und direkte, körperlich spürbare Neurofunk-Energie. Jedes Set, das er spielt, und jeder Track, den er schreibt, bleibt eine Fortsetzung seiner lebenslangen Philosophie: zuerst die Atmosphäre aufbauen — dann die Wucht liefern.
-                          </p>
-                        </div>
-                      )}
-                      {currentLanguage === 'ru' && (
-                        <div className="bio-text bio-text--ru" lang="ru">
-                          <p>
-                            Tobax (Алексей Строков) — представитель среднего поколения drum &amp; bass-артистов, работающий прежде всего в жанре нейрофанк, хотя в ранней дискографии он обращался и к liquid, и к jump-up. Сегодня он — один из самых уважаемых на международной сцене drum &amp; bass-продюсеров и диджеев родом из России, чьё влияние давно признано далеко за её пределами.
-                          </p>
-                          <p>
-                            Задолго до международных перелётов и больших фестивальных сцен его музыкальный путь начался в маленькой комнате после школы. С простым кассетным магнитофоном, драм-машиной и гитарным процессором он ещё ребёнком сочинял и записывал первые треки прямо на чистые кассеты TDK. Это был сырой, ручной процесс, в котором шипение ленты, фон и случайные искажения становились естественной частью звука. Он много экспериментировал с риффами электрогитары — по сути, работал как человек-оркестр. Этот ранний рок-фундамент вместе с глубоким увлечением кино рано сформировал его творческое видение. С тех первых DIY-записей он воспринимает треки не просто как ритм, а как атмосферные пространства — сцены фильма, идущего без экрана.
-                          </p>
-                          <p>
-                            Всерьёз заниматься электронной музыкой он начал в 2010 году в Самаре. Прогресс был осознанно неторопливым — годы ушли на то, чтобы понять, как чистая звуковая мощь и глубокая атмосфера могут сосуществовать в одном дропе. Первое выступление за пределами родного города случилось, когда он был ещё несовершеннолетним: туда он поехал с мамой, но местные промоутеры уже бронировали его как артиста, к которому стоит относиться всерьёз. То, что началось с чистых кассет TDK, выросло в дискографию из более чем сотни изданных треков — не только в цифре, но и на виниле и CD.
-                          </p>
-                          <p>
-                            Преданность делу обернулась плотнейшим графиком — за плечами сотни выступлений. Он много гастролировал по России и одновременно оставил заметный след в Чехии, Австрии и Германии. Время и упорство закономерно привели к мощной поддержке от титанов жанра — Noisia, Black Sun Empire, Ed Rush, Pendulum, A.M.C, Mefjus, Phace — и к крупным релизам на лейблах Titan, Eatbrain, Neuropunk и C4C Recordings. Музыка провела его через всю Европу — на сцены таких фестивалей, как Let It Roll, Rampage, Neuropunk и Pirate Station.
-                          </p>
-                          <p>
-                            В 2021 году открылась новая глава: Tobax переехал в Дрезден. Он органично вписался в местную басовую сцену — во многом благодаря плодотворному сотрудничеству с командой UTM. Сегодня на международных выступлениях он с гордостью представляет и свои корни, и немецкую drum &amp; bass-сцену. Его вклад отметили на Drum &amp; Bass Germany Awards: в 2022 году Tobax занял 2-е место в номинации «Лучший продюсер» (Восточная Германия), а в 2023-м — 3-е место как продюсер и 3-е место за лучший трек.
-                          </p>
-                          <p>
-                            Сегодня звук Tobax соединяет кинематографичные sci-fi-пространства, длинные иммерсивные интро и прямую, физически ощутимую энергию нейрофанка. Каждый его сет и каждый написанный трек — продолжение философии всей его жизни: сначала выстроить атмосферу, затем нанести удар.
-                          </p>
-                        </div>
-                      )}
                     </div>
                   </div>
                 </section>
@@ -459,6 +367,15 @@ function App() {
                   </div>
                 </section>
 
+                {/* ---------- SHOWS — live dates (Bandsintown, click-to-load) ---------- */}
+                <section className="section reveal" id="shows" aria-labelledby="shows-title">
+                  <div className="section-head">
+                    <span className="kicker">Shows</span>
+                    <h2 className="section-title" id="shows-title">Live dates</h2>
+                  </div>
+                  <BandsintownEmbed />
+                </section>
+
                 {/* ---------- FOLLOW — link hub ---------- */}
                 <section className="section reveal" id="follow" aria-labelledby="follow-title">
                   <div className="section-head">
@@ -471,7 +388,6 @@ function App() {
                         <span className="hub-icon"><link.Icon /></span>
                         <span className="hub-text">
                           <span className="hub-name">{link.name}</span>
-                          <span className="hub-handle">{link.handle}</span>
                         </span>
                         <ArrowIcon />
                       </a>
@@ -667,7 +583,7 @@ function App() {
                     Unsere Internetseiten verwenden so genannte „Cookies“. Cookies sind kleine Datenpakete und richten auf Ihrem Endgerät keinen Schaden an. Wir verwenden auf dieser Website ausschließlich technisch notwendige Cookies, die zur Ausübung des elektronischen Kommunikationsvorgangs oder zur Bereitstellung bestimmter, von Ihnen erwünschter Funktionen (z. B. Funktionen des lokalen Audio-Players) erforderlich sind. Die Speicherung dieser technisch notwendigen Cookies erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Wir haben ein berechtigtes Interesse an der Speicherung von Cookies zur technisch fehlerfreien und optimierten Bereitstellung unserer Dienste.
                   </p>
                   <p>
-                    Wir verwenden keine zustimmungspflichtigen Analyse- oder Tracking-Cookies (wie z. B. Google Analytics). Externe Medien-Player (z. B. Spotify) binden wir ausschließlich über eine sogenannte „2-Klick-Lösung“ (Click-to-Load) ein: Der Player wird erst geladen, nachdem Sie aktiv darauf geklickt und damit eingewilligt haben. Vor diesem Klick werden keine Daten an den jeweiligen Anbieter übertragen und keine Drittanbieter-Cookies gesetzt. Daher ist beim bloßen Aufruf dieser Website kein Cookie-Consent-Banner erforderlich.
+                    Wir verwenden keine zustimmungspflichtigen Analyse- oder Tracking-Cookies (wie z. B. Google Analytics). Externe Medien-Player (z. B. Spotify, Bandsintown) binden wir ausschließlich über eine sogenannte „2-Klick-Lösung“ (Click-to-Load) ein: Der Player wird erst geladen, nachdem Sie aktiv darauf geklickt und damit eingewilligt haben. Vor diesem Klick werden keine Daten an den jeweiligen Anbieter übertragen und keine Drittanbieter-Cookies gesetzt. Daher ist beim bloßen Aufruf dieser Website kein Cookie-Consent-Banner erforderlich.
                   </p>
                   <p>Lokaler Audio-Player</p>
                   <p>
@@ -677,6 +593,11 @@ function App() {
                   <p>
                     Auf unserer Website bieten wir die Möglichkeit, Musik über einen eingebetteten Player von Spotify abzuspielen. Anbieter ist die Spotify AB, Regeringsgatan 19, 111 53 Stockholm, Schweden. Der Player wird aus Datenschutzgründen nicht automatisch geladen. Erst wenn Sie aktiv auf „Spotify-Player laden“ klicken, wird eine Verbindung zu den Servern von Spotify hergestellt und der Player nachgeladen. Dabei können Ihre IP-Adresse sowie weitere Daten an Spotify übermittelt und Cookies gesetzt werden; eine Übermittlung in die USA ist möglich. Rechtsgrundlage ist Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die Sie durch den Klick erteilen und jederzeit mit Wirkung für die Zukunft widerrufen können. Einzelheiten zur Datenverarbeitung durch Spotify finden Sie unter{' '}
                     <a href="https://www.spotify.com/legal/privacy-policy/" target="_blank" rel="noreferrer">https://www.spotify.com/legal/privacy-policy/</a>.
+                  </p>
+                  <p>Bandsintown-Tourdaten-Widget (2-Klick-Lösung / Click-to-Load)</p>
+                  <p>
+                    Zur Anzeige unserer Konzert- und Tourtermine binden wir ein Widget des Dienstes Bandsintown ein. Anbieter ist Bandsintown, LLC (USA). Das Widget wird aus Datenschutzgründen nicht automatisch geladen. Erst wenn Sie aktiv auf „Load live dates“ klicken, wird eine Verbindung zu den Servern von Bandsintown hergestellt und das Widget nachgeladen. Dabei können Ihre IP-Adresse sowie weitere Daten an Bandsintown übermittelt und Cookies gesetzt werden; eine Übermittlung in die USA findet statt. Rechtsgrundlage ist Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO, die Sie durch den Klick erteilen und jederzeit mit Wirkung für die Zukunft widerrufen können. Einzelheiten zur Datenverarbeitung durch Bandsintown finden Sie unter{' '}
+                    <a href="https://www.bandsintown.com/privacy" target="_blank" rel="noreferrer">https://www.bandsintown.com/privacy</a>.
                   </p>
                   <p>Externe Links (Social Media &amp; Streaming-Dienste)</p>
                   <p>
@@ -692,7 +613,7 @@ function App() {
             <div className="footer-inner">
               <span className="footer-brand">
                 <img src={monogram} alt="" />
-                © 2026 Tobax · Aleksei Strokov
+                © 2026 Tobax
               </span>
               <nav className="impressum-links" aria-label="Legal">
                 <a className="impressum-link" href="/impressum" onClick={(event) => handlePageNav(event, '/impressum')}>
@@ -706,7 +627,6 @@ function App() {
                   Datenschutzerklärung
                 </a>
               </nav>
-              <span className="footer-credit">Photography · Max Khrabrov</span>
             </div>
           </footer>
         </div>

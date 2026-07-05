@@ -54,110 +54,97 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="contact-layout">
-      <div className="contact-aside">
-        <p className="contact-lead">
-          Bookings, press, guest mixes or business — pick a topic and send a message. It opens in your mail
-          app and goes straight to Tobax.
-        </p>
-        <a className="contact-direct" href={`mailto:${CONTACT_EMAIL}`}>
-          {CONTACT_EMAIL}
-        </a>
-        <p className="contact-hint">Prefer email? Write directly — same inbox.</p>
+    <form className="contact-form" onSubmit={handleSubmit} noValidate>
+      <fieldset className="topic-fieldset">
+        <legend className="field-label">Topic</legend>
+        <div className="topic-grid" role="radiogroup" aria-label="Contact topic">
+          {TOPICS.map((t) => (
+            <label key={t.id} className={`topic-option ${topic === t.id ? 'is-active' : ''}`}>
+              <input
+                type="radio"
+                name="topic"
+                value={t.id}
+                checked={topic === t.id}
+                onChange={() => setTopic(t.id)}
+              />
+              <span>{t.label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <div className="field">
+        <label className="field-label" htmlFor="cf-name">Name</label>
+        <input
+          id="cf-name"
+          className={`field-input ${errors.name ? 'has-error' : ''}`}
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          autoComplete="name"
+          aria-invalid={errors.name ? 'true' : undefined}
+          aria-describedby={errors.name ? 'cf-name-err' : undefined}
+        />
+        {errors.name && <span className="field-error" id="cf-name-err">{errors.name}</span>}
       </div>
 
-      <form className="contact-form" onSubmit={handleSubmit} noValidate>
-        <fieldset className="topic-fieldset">
-          <legend className="field-label">Topic</legend>
-          <div className="topic-grid" role="radiogroup" aria-label="Contact topic">
-            {TOPICS.map((t) => (
-              <label key={t.id} className={`topic-option ${topic === t.id ? 'is-active' : ''}`}>
-                <input
-                  type="radio"
-                  name="topic"
-                  value={t.id}
-                  checked={topic === t.id}
-                  onChange={() => setTopic(t.id)}
-                />
-                <span>{t.label}</span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
+      <div className="field">
+        <label className="field-label" htmlFor="cf-email">Email</label>
+        <input
+          id="cf-email"
+          className={`field-input ${errors.email ? 'has-error' : ''}`}
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          autoComplete="email"
+          aria-invalid={errors.email ? 'true' : undefined}
+          aria-describedby={errors.email ? 'cf-email-err' : undefined}
+        />
+        {errors.email && <span className="field-error" id="cf-email-err">{errors.email}</span>}
+      </div>
 
-        <div className="field">
-          <label className="field-label" htmlFor="cf-name">Name</label>
-          <input
-            id="cf-name"
-            className={`field-input ${errors.name ? 'has-error' : ''}`}
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            autoComplete="name"
-            aria-invalid={errors.name ? 'true' : undefined}
-            aria-describedby={errors.name ? 'cf-name-err' : undefined}
-          />
-          {errors.name && <span className="field-error" id="cf-name-err">{errors.name}</span>}
-        </div>
+      <div className="field">
+        <label className="field-label" htmlFor="cf-message">Message</label>
+        <textarea
+          id="cf-message"
+          className={`field-input field-textarea ${errors.message ? 'has-error' : ''}`}
+          rows={5}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder={activeTopic.placeholder}
+          aria-invalid={errors.message ? 'true' : undefined}
+          aria-describedby={errors.message ? 'cf-message-err' : undefined}
+        />
+        {errors.message && <span className="field-error" id="cf-message-err">{errors.message}</span>}
+      </div>
 
-        <div className="field">
-          <label className="field-label" htmlFor="cf-email">Email</label>
-          <input
-            id="cf-email"
-            className={`field-input ${errors.email ? 'has-error' : ''}`}
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            autoComplete="email"
-            aria-invalid={errors.email ? 'true' : undefined}
-            aria-describedby={errors.email ? 'cf-email-err' : undefined}
-          />
-          {errors.email && <span className="field-error" id="cf-email-err">{errors.email}</span>}
-        </div>
+      {/* honeypot — hidden from humans, catches bots */}
+      <div className="hp-field" aria-hidden="true">
+        <label htmlFor="cf-company">Company</label>
+        <input
+          id="cf-company"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+          value={company}
+          onChange={(e) => setCompany(e.target.value)}
+        />
+      </div>
 
-        <div className="field">
-          <label className="field-label" htmlFor="cf-message">Message</label>
-          <textarea
-            id="cf-message"
-            className={`field-input field-textarea ${errors.message ? 'has-error' : ''}`}
-            rows={5}
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder={activeTopic.placeholder}
-            aria-invalid={errors.message ? 'true' : undefined}
-            aria-describedby={errors.message ? 'cf-message-err' : undefined}
-          />
-          {errors.message && <span className="field-error" id="cf-message-err">{errors.message}</span>}
-        </div>
+      <div className="contact-actions">
+        <button type="submit" className="btn btn--primary">Send message</button>
+        <p className="contact-consent">
+          By sending, your message and contact details are used only to handle your inquiry — see the{' '}
+          <a href="/datenschutzerklaerung">Datenschutzerklärung</a>.
+        </p>
+      </div>
 
-        {/* honeypot — hidden from humans, catches bots */}
-        <div className="hp-field" aria-hidden="true">
-          <label htmlFor="cf-company">Company</label>
-          <input
-            id="cf-company"
-            type="text"
-            tabIndex={-1}
-            autoComplete="off"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-          />
-        </div>
-
-        <div className="contact-actions">
-          <button type="submit" className="btn btn--primary">Send message</button>
-          <p className="contact-consent">
-            By sending, your message and contact details are used only to handle your inquiry — see the{' '}
-            <a href="/datenschutzerklaerung">Datenschutzerklärung</a>.
-          </p>
-        </div>
-
-        {sent && (
-          <p className="contact-success" role="status">
-            ✓ Your mail app should open with the message ready. If nothing happens, write directly to{' '}
-            <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
-          </p>
-        )}
-      </form>
-    </div>
+      {sent && (
+        <p className="contact-success" role="status">
+          ✓ Your mail app should open with the message ready. If nothing happens, write directly to{' '}
+          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+        </p>
+      )}
+    </form>
   )
 }
